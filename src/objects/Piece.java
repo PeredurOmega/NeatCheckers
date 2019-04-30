@@ -1,15 +1,25 @@
 package objects;
 
-public class Piece {
+import enums.Type;
 
-    private int x, y;
+import java.awt.*;
 
-    public Piece(int vX, int vY){
-        this.x = vX;
-        this.y = vY;
+public class Piece extends Position {
+
+    private Type type;
+    private boolean isFromTeamWhite;
+
+    public Piece(int vX, int vY, Type type, boolean vIsFromTeamWhite) {
+        super(vX, vY);
+        this.type = type;
+        this.isFromTeamWhite = vIsFromTeamWhite;
     }
 
-    public void getAvailableMovements(Board currentBoard){
+    private Type getType(){
+        return this.type;
+    }
 
+    public Position[] getAvailableMovements(Board currentBoard){
+        return new Position[0];
     }
 }

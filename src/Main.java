@@ -1,3 +1,4 @@
+import graphics.Display;
 import objects.Board;
 
 import java.util.Random;
@@ -5,8 +6,8 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-
         Board board = new Board();
+
+        Display.displayGame(board);
     }
 }

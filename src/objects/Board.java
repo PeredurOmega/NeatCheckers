@@ -32,6 +32,10 @@ public class Board {
         }
     }
 
+    public Piece[][] getGame() {
+        return game;
+    }
+
     public Piece getSpecificPiece(int vX, int vY){
         return game[vX][vY];
     }

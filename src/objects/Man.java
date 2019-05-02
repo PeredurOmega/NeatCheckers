@@ -15,6 +15,8 @@ public class Man extends Piece {
         //TODO Use recursivity to get all movements with several components
 
         return new ArrayList<Position>();
+        //TODO jade
+        return new Position[0];
     }
 /*
     public Position[] getMovementsToBottomRight(Board currentBoard){

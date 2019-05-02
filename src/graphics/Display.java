@@ -1,6 +1,7 @@
 package graphics;
 
 import objects.Board;
+import objects.Man;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,6 +68,18 @@ public class Display extends JFrame {
             }
             // Pawns
 
+            for(int i = 0; i < row; i++){
+                for(int a = (i+1)%2; a < col; a+= 2){
+                    if(b.getGame()[i][a] != null){
+                        if(b.getGame()[i][a].isFromTeamWhite() == true){
+                            g.setColor(Color.WHITE);
+                        }
+                        else
+                            g.setColor(Color.BLACK);
+                        g.fillOval(5+a*60,5+i*60,50,50);
+                    }
+                }
+            }
         }
     }
 

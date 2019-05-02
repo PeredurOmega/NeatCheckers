@@ -19,6 +19,10 @@ public class Piece extends Position {
         return this.type;
     }
 
+    public boolean isFromTeamWhite() {
+        return isFromTeamWhite;
+    }
+
     public Position[] getAvailableMovements(Board currentBoard){
         return new Position[0];
     }

@@ -13,10 +13,8 @@ public class Man extends Piece {
     @Override
     public ArrayList<Position> getAvailableMovements(Board currentBoard) {
         //TODO Use recursivity to get all movements with several components
-
-        return new ArrayList<Position>();
         //TODO jade
-        return new Position[0];
+        return new ArrayList<Position>();
     }
 /*
     public Position[] getMovementsToBottomRight(Board currentBoard){

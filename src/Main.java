@@ -1,6 +1,9 @@
 import graphics.Display;
 import objects.Board;
 import objects.Position;
+import objects.Position;
+
+import java.util.ArrayList;
 
 public class Main {
 

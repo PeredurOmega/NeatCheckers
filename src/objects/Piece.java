@@ -3,6 +3,7 @@ package objects;
 import enums.Type;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Piece extends Position {
 
@@ -19,11 +20,7 @@ public class Piece extends Position {
         return this.type;
     }
 
-    public boolean isFromTeamWhite() {
-        return isFromTeamWhite;
-    }
-
-    public Position[] getAvailableMovements(Board currentBoard){
-        return new Position[0];
+    public ArrayList<Position> getAvailableMovements(Board currentBoard){
+        return new ArrayList<Position>();
     }
 }

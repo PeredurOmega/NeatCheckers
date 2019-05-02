@@ -14,7 +14,7 @@ public class Man extends Piece {
 
         return new Position[0];
     }
-    /*
+/*
     public Position[] getMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
 
@@ -37,6 +37,6 @@ public class Man extends Piece {
             }
         }
         return movements;
-    }
-    */
+    }*/
+
 }

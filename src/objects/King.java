@@ -2,6 +2,8 @@ package objects;
 
 import enums.Type;
 
+import java.util.ArrayList;
+
 public class King extends Piece {
 
     public King(int vX, int vY, boolean vIsFromWhiteTeam) {
@@ -15,8 +17,8 @@ public class King extends Piece {
 
         return new Position[0];
     }
-/*
-    public Position[] getMovementsToBottomRight(Board currentBoard){
+
+    public ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
 
         boolean previousCellOccupied = false;
@@ -39,5 +41,5 @@ public class King extends Piece {
         }
         return movements;
     }
-    */
+
 }

@@ -15,7 +15,7 @@ public class Piece extends Position {
         this.isFromTeamWhite = vIsFromTeamWhite;
     }
 
-    private Type getType(){
+    public Type getType(){
         return this.type;
     }
 

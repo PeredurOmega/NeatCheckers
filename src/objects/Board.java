@@ -32,11 +32,31 @@ public class Board {
         }
     }
 
+    public Piece getSpecificPiece(int vX, int vY){
+        return game[vX][vY];
+    }
+
     public int getRow() {
         return row;
     }
 
     public int getCol() {
         return col;
+    }
+
+    public Player getPlayerA() {
+        return playerA;
+    }
+
+    public void setPlayerA(Player playerA) {
+        this.playerA = playerA;
+    }
+
+    public Player getPlayerB() {
+        return playerB;
+    }
+
+    public void setPlayerB(Player playerB) {
+        this.playerB = playerB;
     }
 }

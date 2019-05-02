@@ -2,6 +2,8 @@ package objects;
 
 import enums.Type;
 
+import java.util.ArrayList;
+
 public class Man extends Piece {
 
     public Man(int vX, int vY, boolean vIsFromWhiteTeam) {
@@ -9,10 +11,10 @@ public class Man extends Piece {
     }
 
     @Override
-    public Position[] getAvailableMovements(Board currentBoard) {
+    public ArrayList<Position> getAvailableMovements(Board currentBoard) {
         //TODO Use recursivity to get all movements with several components
 
-        return new Position[0];
+        return new ArrayList<Position>();
     }
 /*
     public Position[] getMovementsToBottomRight(Board currentBoard){

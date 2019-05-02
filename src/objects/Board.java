@@ -11,9 +11,8 @@ public class Board {
 
     private final int row = 10, col = 10;
 
-    private Piece[] blackPawns = new Piece[20];
+    private Piece[][] game = new Piece[10][10];
 
-    private Piece[] whitePawns = new Piece[20];
 
     public Board(){
         initGame();
@@ -23,12 +22,12 @@ public class Board {
         boolean aBegin = new Random().nextBoolean();
         this.playerA = new Player(aBegin);
         this.playerB = new Player(!aBegin);
-        int nbr = 0;
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < row; i++){
             for(int a = (i+1)%2; a < col; a+= 2){
-                blackPawns[nbr] = new Man(i, a, false);
-                whitePawns[nbr] = new Man(i+6, a, true);
-                nbr++;
+                if(i<4)
+                    game[i][a] = new Man(i, a, false);
+                else if(i>5)
+                    game[i][a] = new Man(i, a, true);
             }
         }
     }

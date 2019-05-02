@@ -2,9 +2,12 @@ package graphics;
 
 import objects.Board;
 import objects.Man;
+import objects.Position;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Display extends JFrame {
     private static Display game = null;
@@ -13,6 +16,7 @@ public class Display extends JFrame {
     public Display(Board b){
         super("Checkers");
         gc = new GameContent(b);
+        gc.addMouseListener(gc);
         add(gc);
         setUndecorated(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,9 +33,14 @@ public class Display extends JFrame {
         game.gc.b = b;
     }
 
-    class GameContent extends JPanel{
+    public static Position getCaseClicked(){
+        return game.gc.getClickedPos();
+    }
+
+    class GameContent extends JPanel implements MouseListener {
 
         int sideSize;
+        Position clickedPos;
         Board b;
 
         GameContent(Board b){
@@ -40,6 +49,7 @@ public class Display extends JFrame {
 
             sideSize = (Toolkit.getDefaultToolkit().getScreenSize().height/600)*600;
 
+            clickedPos = new Position(-1,-1);
 
             setPreferredSize(new Dimension(sideSize,sideSize));
 
@@ -80,6 +90,37 @@ public class Display extends JFrame {
                     }
                 }
             }
+        }
+
+        public Position getClickedPos(){
+            return clickedPos;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            clickedPos = new Position(e.getX()/(sideSize / b.getRow()),e.getY()/(sideSize / b.getCol()));
+
+            System.out.println("Clicked : " + clickedPos);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
         }
     }
 

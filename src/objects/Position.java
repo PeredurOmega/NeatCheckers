@@ -13,6 +13,10 @@ public class Position {
         return x+" "+y;
     }
 
+    public boolean equals(Position p){
+        return (p.getX()==x && p.getY()==y);
+    }
+
     public int getX(){
         return this.x;
     }

@@ -105,7 +105,7 @@ public class Display extends JFrame {
         public void mousePressed(MouseEvent e) {
             clickedPos = new Position(e.getX()/(sideSize / b.getRow()),e.getY()/(sideSize / b.getCol()));
 
-            System.out.println("Clicked : " + clickedPos);
+
         }
 
         @Override

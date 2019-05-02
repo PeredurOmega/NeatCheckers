@@ -14,13 +14,15 @@ public class Main {
 
         Display.displayGame(board);
 
-        Position a = waitForClick();
+        Position click = waitForClick();
+
+        System.out.println("Clicked : " + click);
     }
 
     public static Position waitForClick(){
 
         while(Display.getCaseClicked().equals(precPos)){
-            pause(500);
+            pause(50);
         }
         precPos = Display.getCaseClicked();
         return Display.getCaseClicked();

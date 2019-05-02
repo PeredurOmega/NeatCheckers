@@ -11,7 +11,7 @@ public class Man extends Piece {
     @Override
     public Position[] getAvailableMovements(Board currentBoard) {
         //TODO Use recursivity to get all movements with several components
-
+        //TODO jade
         return new Position[0];
     }
 /*

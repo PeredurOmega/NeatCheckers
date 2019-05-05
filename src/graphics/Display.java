@@ -1,5 +1,7 @@
 package graphics;
 
+import controllers.GameController;
+import interfaces.GameListener;
 import objects.Board;
 import objects.Man;
 import objects.Position;
@@ -12,11 +14,13 @@ import java.awt.event.MouseListener;
 public class Display extends JFrame {
     private static Display game = null;
     private GameContent gc;
+    private GameListener gameListener;
 
-    public Display(Board b){
+    public Display(Board b, GameListener gm){
         super("Checkers");
         gc = new GameContent(b);
         gc.addMouseListener(gc);
+        gameListener = gm;
         add(gc);
         setUndecorated(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -26,14 +30,14 @@ public class Display extends JFrame {
         setVisible(true);
     }
 
-    public static void displayGame(Board b){
+    public void displayGame(Board b){
         if(game == null){
-            game = new Display(b);
+            game = new Display(b, gameListener);
         }
         game.gc.b = b;
     }
 
-    public static Position getCaseClicked(){
+    public Position getCaseClicked(){
         return game.gc.getClickedPos();
     }
 
@@ -44,15 +48,10 @@ public class Display extends JFrame {
         Board b;
 
         GameContent(Board b){
-
             this.b = b;
-
             sideSize = (Toolkit.getDefaultToolkit().getScreenSize().height/600)*600;
-
             clickedPos = new Position(-1,-1);
-
             setPreferredSize(new Dimension(sideSize,sideSize));
-
         }
 
         public void paint(Graphics g){
@@ -87,7 +86,6 @@ public class Display extends JFrame {
                             g.setColor(Color.BLACK);
                             g.fillOval(5+a*60,5+i*60,50,50);
                         }
-
                     }
                 }
             }
@@ -105,7 +103,6 @@ public class Display extends JFrame {
         @Override
         public void mousePressed(MouseEvent e) {
             clickedPos = new Position(e.getX()/(sideSize / b.getRow()),e.getY()/(sideSize / b.getCol()));
-
 
         }
 

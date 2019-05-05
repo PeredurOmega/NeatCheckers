@@ -27,4 +27,8 @@ public class Piece extends Position {
     public ArrayList<Position> getAvailableMovements(Board currentBoard){
         return new ArrayList<Position>();
     }
+
+    public void setFromTeamWhite(boolean fromTeamWhite) {
+        isFromTeamWhite = fromTeamWhite;
+    }
 }

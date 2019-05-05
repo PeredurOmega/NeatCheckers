@@ -24,10 +24,12 @@ public class Board {
         this.playerB = new Player(!aBegin);
         for(int i = 0; i < row; i++){
             for(int a = (i+1)%2; a < col; a+= 2){
-                if(i<4)
+                if(i<4){
                     game[i][a] = new Man(i, a, false);
-                else if(i>5)
+                }
+                else if(i>5){
                     game[i][a] = new Man(i, a, true);
+                }
             }
         }
     }

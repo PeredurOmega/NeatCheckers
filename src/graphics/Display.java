@@ -19,7 +19,7 @@ public class Display extends JFrame {
         gc.addMouseListener(gc);
         add(gc);
         setUndecorated(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
@@ -56,15 +56,14 @@ public class Display extends JFrame {
         }
 
         public void paint(Graphics g){
-
             super.paint(g);
-
             drawGame(g);
         }
 
         void drawGame(Graphics g){
             // Board
             setBackground(new Color(16574601));
+            ((Graphics2D) (g)).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
             g.setColor(new Color(10504971));
 
             int row = b.getRow();
@@ -81,12 +80,14 @@ public class Display extends JFrame {
             for(int i = 0; i < row; i++){
                 for(int a = (i+1)%2; a < col; a+= 2){
                     if(b.getGame()[i][a] != null){
-                        if(b.getGame()[i][a].isFromTeamWhite() == true){
+                        if(b.getSpecificPiece(i, a).isFromTeamWhite()){
                             g.setColor(Color.WHITE);
-                        }
-                        else
+                            g.fillOval(5+a*60,5+i*60,50,50);
+                        }else{
                             g.setColor(Color.BLACK);
-                        g.fillOval(5+a*60,5+i*60,50,50);
+                            g.fillOval(5+a*60,5+i*60,50,50);
+                        }
+
                     }
                 }
             }

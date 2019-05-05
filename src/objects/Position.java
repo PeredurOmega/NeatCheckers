@@ -13,15 +13,25 @@ public class Position {
         return x+" "+y;
     }
 
-    public boolean equals(Position p){
-        return (p.getX()==x && p.getY()==y);
-    }
-
     public int getX(){
         return this.x;
     }
 
     public int getY(){
         return this.y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Position p = (Position) obj;
+        return (p.getX() == x && p.getY() == y);
     }
 }

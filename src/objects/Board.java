@@ -76,4 +76,11 @@ public class Board {
     public void setPlayerB(Player playerB) {
         this.playerB = playerB;
     }
+
+    public void move(Position fromPosition, Position toPosition){
+        game[toPosition.getX()][toPosition.getY()] = game[fromPosition.getX()][fromPosition.getY()];
+        game[toPosition.getX()][toPosition.getY()].setX(toPosition.getX());
+        game[toPosition.getX()][toPosition.getY()].setY(toPosition.getY());
+        game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
+    }
 }

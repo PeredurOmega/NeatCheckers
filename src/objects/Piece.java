@@ -31,4 +31,5 @@ public class Piece extends Position {
     public void setFromTeamWhite(boolean fromTeamWhite) {
         isFromTeamWhite = fromTeamWhite;
     }
+
 }

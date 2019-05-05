@@ -5,6 +5,7 @@ import controllers.GameController;
 import interfaces.GameListener;
 import objects.Board;
 import objects.Man;
+import objects.Piece;
 import objects.Position;
 
 import javax.swing.*;
@@ -32,5 +33,13 @@ public class Display extends JFrame {
 
     public void showPossibilities(ArrayList<Position> availableMovements) {
         gameContent.drawAvailablePositions(availableMovements);
+    }
+
+    public void cleanPossibilities() {
+        gameContent.cleanPossibilities();
+    }
+
+    public Boolean movePiece(Position fromPosition, Position toPosition, Piece piece) {
+        return gameContent.movePiece(fromPosition, toPosition, piece);
     }
 }

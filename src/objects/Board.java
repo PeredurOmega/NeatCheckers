@@ -46,7 +46,11 @@ public class Board {
     }
 
     public Piece getSpecificPiece(Position position){
-        return game[position.getX()][position.getY()];
+        if(position.getX() < 0 || position.getX() > 9 || position.getY() < 0 || position.getY() > 9 ){
+            return new Out();
+        }else{
+            return game[position.getX()][position.getY()];
+        }
     }
 
     public int getRow() {

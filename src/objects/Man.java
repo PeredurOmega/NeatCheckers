@@ -74,11 +74,12 @@ public class Man extends Piece {
 
     public ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
+        ArrayList<Position> movements = new ArrayList<Position>();
         System.out.println(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY);
-        if(currentBoard.getSpecificPiece(new Position(x, y +1)).getType() == Type.EMPTY){
-
+        if(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY){
+            movements.add(new Position(x - 1, y - 1));
         }
-        return new ArrayList<Position>();
+        return movements;
     }
 
     public ArrayList<Position> getMovementsToTopRight(Board currentBoard){

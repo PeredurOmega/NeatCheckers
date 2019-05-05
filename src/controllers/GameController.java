@@ -14,9 +14,9 @@ public class GameController implements GameListener {
     @Override
     public void onClick(Position position) {
         Piece piece = board.getSpecificPiece(position);
-        /*if(piece.getType() == Type.MAN || piece.getType() == Type.KING){
+        if(piece.getType() == Type.MAN || piece.getType() == Type.KING){
             displayer.showPossibilities(piece.getAvailableMovements(board));
-        }*/
+        }
 
         System.out.println("Clicked : " + position);
         System.out.println("Clicked : " + piece.getType());

@@ -16,6 +16,7 @@ public class GameContent extends JPanel implements MouseListener {
     private Position clickedPos;
     private Board b;
     private GameListener gameListener;
+    private Graphics g;
 
     public GameContent(Board b, GameListener gm){
         this.b = b;
@@ -30,10 +31,11 @@ public class GameContent extends JPanel implements MouseListener {
         drawGame(g);
     }
 
-    private void drawGame(Graphics g){
+    private void drawGame(Graphics graphics){
+        this.g =  graphics;
         // Board
         setBackground(new Color(16574601));
-        ((Graphics2D) (g)).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+        ((Graphics2D) g).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         g.setColor(new Color(10504971));
 
         int row = b.getRow();
@@ -88,8 +90,10 @@ public class GameContent extends JPanel implements MouseListener {
 
     }
 
-    public void drawAvailablePositions(Graphics graphics, Position position) {
-        graphics.setColor(Color.GREEN);
-        graphics.fillOval(5+position.getY()*60,5+position.getX()*60,50,50);
+    public void drawAvailablePositions(Position position) {
+        Graphics graphics1 = getGraphics();
+        ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+        graphics1.setColor(Color.GREEN);
+        graphics1.fillOval(5+position.getY()*60, 5+position.getX()*60,50,50);
     }
 }

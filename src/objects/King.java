@@ -29,7 +29,7 @@ public class King extends Piece {
         boolean currentCellOccupied = false;
         while((x < 10 && y < 10) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
             previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY);
+            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
             x++;
             y++;
         }
@@ -37,7 +37,7 @@ public class King extends Piece {
         if(previousCellOccupied && !currentCellOccupied){
             x--;
             y--;
-            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY)){
+            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
                 movements.add(new Position(x, y));
                 x++;
                 y++;
@@ -53,7 +53,7 @@ public class King extends Piece {
         boolean currentCellOccupied = false;
         while((x < 10 && y > 0) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
             previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY);
+            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
             x++;
             y--;
         }
@@ -61,7 +61,7 @@ public class King extends Piece {
         if(previousCellOccupied && !currentCellOccupied){
             x--;
             y++;
-            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY)){
+            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
                 movements.add(new Position(x, y));
                 x++;
                 y--;
@@ -77,7 +77,7 @@ public class King extends Piece {
         boolean currentCellOccupied = false;
         while((x > 0 && y > 0) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
             previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY);
+            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
             x--;
             y--;
         }
@@ -85,7 +85,7 @@ public class King extends Piece {
         if(previousCellOccupied && !currentCellOccupied){
             x++;
             y++;
-            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY)){
+            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
                 movements.add(new Position(x, y));
                 x--;
                 y--;
@@ -101,7 +101,7 @@ public class King extends Piece {
         boolean currentCellOccupied = false;
         while((x > 0 && y < 10) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
             previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY);
+            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
             x--;
             y++;
         }
@@ -109,7 +109,7 @@ public class King extends Piece {
         if(previousCellOccupied && !currentCellOccupied){
             x++;
             y--;
-            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(x, y).getType() != Type.EMPTY)){
+            while((x < 10 && y < 10) || (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
                 movements.add(new Position(x, y));
                 x--;
                 y++;

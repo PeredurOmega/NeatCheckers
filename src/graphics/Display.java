@@ -11,19 +11,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class Display extends JFrame {
 
+    private GameContent gameContent;
+
     public Display(Board b, GameListener gm){
         super("Checkers");
-        GameContent gc = new GameContent(b, gm);
-        gc.addMouseListener(gc);
-        add(gc);
+        gameContent = new GameContent(b, gm);
+        gameContent.addMouseListener(gameContent);
+        add(gameContent);
         setUndecorated(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    public void showPossibilities(ArrayList<Position> availableMovements) {
+        for(Position availableMovement: availableMovements){
+            gameContent.drawAvailablePositions(getGraphics(), availableMovement);
+        }
     }
 }

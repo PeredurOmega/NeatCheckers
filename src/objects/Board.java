@@ -32,14 +32,21 @@ public class Board {
                 }
             }
         }
+        for(int i = 0; i < row; i++){
+            for(int a = 0; a < col; a++){
+                if(game[i][a] == null){
+                    game[i][a] = new Empty(i, a);
+                }
+            }
+        }
     }
 
     public Piece[][] getGame() {
         return game;
     }
 
-    public Piece getSpecificPiece(int vX, int vY){
-        return game[vX][vY];
+    public Piece getSpecificPiece(Position position){
+        return game[position.getX()][position.getY()];
     }
 
     public int getRow() {

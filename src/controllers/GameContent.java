@@ -1,5 +1,6 @@
 package controllers;
 
+import enums.Type;
 import interfaces.GameListener;
 import objects.Board;
 import objects.Position;
@@ -47,9 +48,9 @@ public class GameContent extends JPanel implements MouseListener {
         // Pawns
 
         for(int i = 0; i < row; i++){
-            for(int a = (i+1)%2; a < col; a+= 2){
-                if(b.getGame()[i][a] != null){
-                    if(b.getSpecificPiece(i, a).isFromTeamWhite()){
+            for(int a = 0; a < col; a++){
+                if(b.getGame()[i][a].getType() == Type.MAN){
+                    if(b.getSpecificPiece(new Position(i, a)).isFromTeamWhite()){
                         g.setColor(Color.WHITE);
                         g.fillOval(5+a*60,5+i*60,50,50);
                     }else{
@@ -68,7 +69,7 @@ public class GameContent extends JPanel implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        clickedPos = new Position(e.getX()/(sideSize / b.getRow()),e.getY()/(sideSize / b.getCol()));
+        clickedPos = new Position(e.getY()/(sideSize / b.getCol()),e.getX()/(sideSize / b.getRow()));
         gameListener.onClick(clickedPos);
     }
 
@@ -85,5 +86,10 @@ public class GameContent extends JPanel implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public void drawAvailablePositions(Graphics graphics, Position position) {
+        graphics.setColor(Color.GREEN);
+        graphics.fillOval(5+position.getY()*60,5+position.getX()*60,50,50);
     }
 }

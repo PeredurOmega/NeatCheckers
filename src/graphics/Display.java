@@ -31,8 +31,6 @@ public class Display extends JFrame {
     }
 
     public void showPossibilities(ArrayList<Position> availableMovements) {
-        for(Position availableMovement: availableMovements){
-            gameContent.drawAvailablePositions(availableMovement);
-        }
+        gameContent.drawAvailablePositions(availableMovements);
     }
 }

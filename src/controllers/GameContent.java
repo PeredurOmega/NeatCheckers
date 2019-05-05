@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class GameContent extends JPanel implements MouseListener {
 
@@ -17,6 +18,7 @@ public class GameContent extends JPanel implements MouseListener {
     private Board b;
     private GameListener gameListener;
     private Graphics g;
+    private ArrayList<Position> shownMovements = new ArrayList<Position>();
 
     public GameContent(Board b, GameListener gm){
         this.b = b;
@@ -90,10 +92,27 @@ public class GameContent extends JPanel implements MouseListener {
 
     }
 
-    public void drawAvailablePositions(Position position) {
+    public void cleanAvailablePositions(ArrayList<Position> positions) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
-        graphics1.fillOval(5+position.getY()*60, 5+position.getX()*60,50,50);
+        for(Position position: positions){
+            graphics1.clearRect(position.getY()*60, position.getX()*60,60,60);
+            graphics1.setColor(new Color(10504971));
+            graphics1.fillRect(position.getY()*60, position.getX()*60,60,60);
+        }
+    }
+
+
+
+    public void drawAvailablePositions(ArrayList<Position> positions) {
+        Graphics graphics1 = getGraphics();
+        ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+        graphics1.setColor(Color.GREEN);
+        cleanAvailablePositions(shownMovements);
+        for(Position position: positions){
+            graphics1.fillRect(position.getY()*60, position.getX()*60,60,60);
+        }
+        this.shownMovements = positions;
     }
 }

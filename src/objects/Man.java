@@ -26,48 +26,18 @@ public class Man extends Piece {
 
     public ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-
-        boolean previousCellOccupied = false;
-        boolean currentCellOccupied = false;
-        while((x < 10 && y < 10) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
-            previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
-            x++;
-            y++;
-        }
         ArrayList<Position> movements = new ArrayList<Position>();
-        if(previousCellOccupied && !currentCellOccupied){
-            x--;
-            y--;
-            while((x < 10 && y < 10) && (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
-                movements.add(new Position(x, y));
-                x++;
-                y++;
-            }
+        if(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY){
+            movements.add(new Position(x + 1, y + 1));
         }
         return movements;
     }
 
-    public ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
+    public ArrayList<Position> getMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-
-        boolean previousCellOccupied = false;
-        boolean currentCellOccupied = false;
-        while((x < 10 && y > 0) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
-            previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
-            x++;
-            y--;
-        }
         ArrayList<Position> movements = new ArrayList<Position>();
-        if(previousCellOccupied && !currentCellOccupied){
-            x--;
-            y++;
-            while((x < 10 && y > 0) && (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
-                movements.add(new Position(x, y));
-                x++;
-                y--;
-            }
+        if(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY){
+            movements.add(new Position(x - 1, y + 1));
         }
         return movements;
     }
@@ -82,26 +52,11 @@ public class Man extends Piece {
         return movements;
     }
 
-    public ArrayList<Position> getMovementsToTopRight(Board currentBoard){
+    public ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
-
-        boolean previousCellOccupied = false;
-        boolean currentCellOccupied = false;
-        while((x > 0 && y < 10) && (!previousCellOccupied || currentCellOccupied) && (!previousCellOccupied || !currentCellOccupied)){
-            previousCellOccupied = currentCellOccupied;
-            currentCellOccupied = (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY);
-            x--;
-            y++;
-        }
         ArrayList<Position> movements = new ArrayList<Position>();
-        if(previousCellOccupied && !currentCellOccupied){
-            x++;
-            y--;
-            while((x > 0 && y < 10) && (currentBoard.getSpecificPiece(new Position(x, y)).getType() != Type.EMPTY)){
-                movements.add(new Position(x, y));
-                x--;
-                y++;
-            }
+        if(currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).getType() == Type.EMPTY){
+            movements.add(new Position(x + 1, y - 1));
         }
         return movements;
     }

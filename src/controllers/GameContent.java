@@ -6,25 +6,53 @@ import objects.Board;
 import objects.Piece;
 import objects.Position;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameContent extends JPanel implements MouseListener {
 
     private int sideSize;
+    private int caseSize;
+    private double pieceRatio;
+    private double crownRatio;
+    private int pieceGap;
+    private int crownGap;
+    private int pieceSize;
+    private int crownSize;
     private Board b;
     private Position clickedPos;
     private GameListener gameListener;
     private ArrayList<Position> shownMovements = new ArrayList<Position>();
+    private BufferedImage whiteCrown;
+    private BufferedImage blackCrown;
 
     public GameContent(Board b, GameListener gm){
         this.b = b;
         this.gameListener = gm;
         sideSize = (Toolkit.getDefaultToolkit().getScreenSize().height/600)*600;
+        caseSize = sideSize/b.getRow();
+        pieceRatio = 5/6d;
+        crownRatio = 1/2d;
+        pieceGap = (int)((1-pieceRatio)*caseSize/2);
+        crownGap = (int)((1-crownRatio)*caseSize/2);
+        pieceSize = (int)(pieceRatio*caseSize);
+        System.out.println(pieceSize);
+        crownSize = (int)(crownRatio*caseSize);
+        System.out.println(crownSize);
         clickedPos = new Position(-1,-1);
+        try{
+            whiteCrown = ImageIO.read(new File("res/white-crown.png"));
+            blackCrown = ImageIO.read(new File("res/black-crown.png"));
+        }catch(IOException ex){
+            System.out.println("Failed Displaying Image");
+        }
         setPreferredSize(new Dimension(sideSize,sideSize));
     }
 
@@ -47,7 +75,7 @@ public class GameContent extends JPanel implements MouseListener {
         for(int i = 0; i< row;i++) { //b.getRow()
             for (int a = 0; a < col; a++) { //b.getCol()
                 if((a+i)%2 == 1)
-                    g.fillRect(a * sideSize / row, i * sideSize / col, sideSize / row, sideSize/ col);
+                    g.fillRect(a * caseSize, i * caseSize, caseSize, caseSize);
             }
         }
         // Pawns
@@ -56,10 +84,22 @@ public class GameContent extends JPanel implements MouseListener {
                 if(b.getGame()[i][a].getType() == Type.MAN){
                     if(b.getSpecificPiece(new Position(i, a)).isFromTeamWhite()){
                         g.setColor(Color.WHITE);
-                        g.fillOval(5+a*60,5+i*60,50,50);
+                        g.fillOval(pieceGap +a*caseSize, pieceGap +i*caseSize,pieceSize,pieceSize);
                     }else{
                         g.setColor(Color.BLACK);
-                        g.fillOval(5+a*60,5+i*60,50,50);
+                        g.fillOval(pieceGap +a*caseSize, pieceGap +i*caseSize,pieceSize,pieceSize);
+                    }
+                }
+                else if(b.getGame()[i][a].getType() == Type.KING){
+                    //Bug in Crown Display to resolve
+                    if(b.getSpecificPiece(new Position(i, a)).isFromTeamWhite()){
+                        g.setColor(Color.WHITE);
+                        g.fillOval(pieceGap +a*caseSize, pieceGap +i*caseSize,pieceSize,pieceSize);
+                        g.drawImage(blackCrown, crownGap+a*caseSize,crownGap+i*caseSize,crownSize,crownSize,null);
+                    }else{
+                        g.setColor(Color.BLACK);
+                        g.fillOval(pieceGap +a*caseSize, pieceGap +i*caseSize,pieceSize,pieceSize);
+                        g.drawImage(whiteCrown, crownGap+a*caseSize,crownGap+i*caseSize,crownSize,crownSize, null);
                     }
                 }
             }

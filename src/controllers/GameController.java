@@ -44,6 +44,11 @@ public class GameController implements GameListener {
         this.board.move(fromPosition, toPosition);
     }
 
+    @Override
+    public void eatOnBoard(Position eatingPosition) {
+        this.board.eat(eatingPosition);
+    }
+
     public void startGame(){
         board = new Board();
         displayer = new Display(board, GameController.this);

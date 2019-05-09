@@ -89,4 +89,7 @@ public class Board {
         game[toPosition.getX()][toPosition.getY()].setY(toPosition.getY());
         game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
     }
+    public void eat(Position eatPosition){
+        game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());
+    }
 }

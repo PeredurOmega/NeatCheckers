@@ -129,6 +129,11 @@ public class GameContent extends JPanel implements MouseListener {
 
     public boolean movePiece(Position fromPosition, Position toPosition, Piece piece) {
         if(shownMovements.contains(toPosition)){
+            if(Math.abs(fromPosition.getX()-toPosition.getX()) == 2 && Math.abs(fromPosition.getY()-toPosition.getY()) == 2){
+                Position eatingPosition = new Position((int)((fromPosition.getX() + toPosition.getX())/2), (int)((fromPosition.getY() + toPosition.getY())/2));
+                cleanPosition(eatingPosition);
+                gameListener.eatOnBoard(eatingPosition);
+            }
             cleanPositions(shownMovements);
             gameListener.moveOnBoard(fromPosition, toPosition);
             drawMove(fromPosition, toPosition, piece);

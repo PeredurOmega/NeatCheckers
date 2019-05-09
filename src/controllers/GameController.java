@@ -11,24 +11,30 @@ import objects.Position;
 public class GameController implements GameListener {
     Display displayer;
     Board board;
-    Boolean showAvailableMode = false;
+    boolean showAvailableMode = false;
+    boolean isRightTurn;
     Position fromPosition;
 
     @Override
     public void onClick(Position toPosition) {
         Piece piece = board.getSpecificPiece(toPosition);
         System.out.println(piece.getType());
-        if(showAvailableMode){
+        if (showAvailableMode) {
             showAvailableMode = !displayer.movePiece(fromPosition, toPosition, board.getSpecificPiece(fromPosition));
-            if(showAvailableMode){
+            if(!showAvailableMode)
+                board.setTeamWhiteTurn(!board.isTeamWhiteTurn());
+            if (showAvailableMode) {
                 displayer.cleanPossibilities();
                 showAvailableMode = false;
             }
-        }else{
-            if(piece.getType() == Type.MAN || piece.getType() == Type.KING){
-                fromPosition = toPosition;
-                showAvailableMode = true;
-                displayer.showPossibilities(piece.getAvailableMovements(board));
+        } else {
+            if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
+                isRightTurn = !(piece.isFromTeamWhite()^board.isTeamWhiteTurn());
+                if(isRightTurn) {
+                    fromPosition = toPosition;
+                    showAvailableMode = true;
+                    displayer.showPossibilities(piece.getAvailableMovements(board));
+                }
             }
         }
     }

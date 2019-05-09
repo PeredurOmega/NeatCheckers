@@ -9,6 +9,8 @@ public class Board {
     private Player playerA;
     private Player playerB;
 
+    private boolean isTeamWhiteTurn = true;
+
     private final int row = 10, col = 10;
 
     private Piece[][] game = new Piece[10][10];
@@ -52,6 +54,10 @@ public class Board {
             return game[position.getX()][position.getY()];
         }
     }
+
+    public boolean isTeamWhiteTurn() { return isTeamWhiteTurn; }
+
+    public void setTeamWhiteTurn(boolean teamWhiteTurn) { isTeamWhiteTurn = teamWhiteTurn; }
 
     public int getRow() {
         return row;

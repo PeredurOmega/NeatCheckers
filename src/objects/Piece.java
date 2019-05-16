@@ -28,6 +28,11 @@ public class Piece extends Position {
         return new ArrayList<Position>();
     }
 
+    @Override
+    public Position getPosition() {
+        return super.getPosition();
+    }
+
     public void setFromTeamWhite(boolean fromTeamWhite) {
         isFromTeamWhite = fromTeamWhite;
     }

@@ -29,7 +29,7 @@ public class GameController implements GameListener {
             }
         } else {
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
-                isRightTurn = !(piece.isFromTeamWhite()^board.isTeamWhiteTurn());
+                isRightTurn = piece.isFromTeamWhite() == board.isTeamWhiteTurn();
                 if(isRightTurn) {
                     fromPosition = toPosition;
                     showAvailableMode = true;

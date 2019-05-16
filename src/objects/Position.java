@@ -34,4 +34,8 @@ public class Position {
         Position p = (Position) obj;
         return (p.getX() == x && p.getY() == y);
     }
+
+    public Position getPosition(){
+        return this;
+    }
 }

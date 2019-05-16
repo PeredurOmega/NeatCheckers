@@ -1,6 +1,7 @@
 package objects;
 
 import enums.Type;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,42 @@ public class Man extends Piece {
         for(Position position: positions){
             System.out.println(position);
         }
-        return positions;
+        ArrayList<Position> eatingPositions = getAllEatingMovements(currentBoard);
+        ArrayList<Position> eatingPositionsToSend = new ArrayList<Position>();
+
+        if(eatingPositions.size() > 0){
+            for(Position toPosition: eatingPositions){
+                System.out.println(toPosition);
+                Board temporaryBoard = (Board) currentBoard.clone();
+                Position eatingPiecePosition = new Position((int)((this.getX() + toPosition.getX())/2), (int)((this.getY() + toPosition.getY())/2));
+                temporaryBoard.eat(eatingPiecePosition);
+                temporaryBoard.eat(this.getPosition());
+                Man man = new Man(toPosition.getX(), toPosition.getY(), this.isFromTeamWhite());
+                temporaryBoard.addPiece(man);
+                ArrayList<Position> nextEatingPosition = man.getAllEatingMovements(temporaryBoard);
+                System.out.println(nextEatingPosition);
+                if(nextEatingPosition.size() > 0){
+                    eatingPositionsToSend.addAll(nextEatingPosition);
+                }else{
+                    eatingPositionsToSend.add(toPosition);
+                }
+            }
+            return eatingPositionsToSend;
+        }else{
+            return positions;
+        }
     }
 
-    public ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
+    private ArrayList<Position> getAllEatingMovements(Board board){
+        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
+        eatingPositions.addAll(getEatingMovementsToBottomRight(board));
+        eatingPositions.addAll(getEatingMovementsToTopLeft(board));
+        eatingPositions.addAll(getEatingMovementsToTopRight(board));
+        return eatingPositions;
+    }
+
+    private ArrayList<Position> getEatingMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<Position>();
         System.out.print(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY);
@@ -33,14 +66,11 @@ public class Man extends Piece {
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).isFromTeamWhite()&&
                 currentBoard.getSpecificPiece(new Position(x + 2, y + 2)).getType() == Type.EMPTY){
             movements.add(new Position(x +2, y + 2));
-        }else if(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()) {
-
-            movements.add(new Position(x + 1, y + 1));
         }
         return movements;
     }
 
-    public ArrayList<Position> getMovementsToTopRight(Board currentBoard){
+    private ArrayList<Position> getEatingMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<Position>();
         System.out.println(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY);
@@ -49,14 +79,11 @@ public class Man extends Piece {
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).isFromTeamWhite() &&
                 currentBoard.getSpecificPiece(new Position(x - 2, y + 2)).getType() == Type.EMPTY){
             movements.add(new Position(x - 2, y + 2));
-        }else if(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY && this.isFromTeamWhite()) {
-            movements.add(new Position(x - 1, y + 1));
-
         }
         return movements;
     }
 
-    public ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
+    private ArrayList<Position> getEatingMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<Position>();
         System.out.println(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY);
@@ -65,13 +92,11 @@ public class Man extends Piece {
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).isFromTeamWhite() &&
                 currentBoard.getSpecificPiece(new Position(x - 2, y - 2)).getType() == Type.EMPTY){
             movements.add(new Position(x - 2, y - 2));
-        }else if(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY && this.isFromTeamWhite()){
-            movements.add(new Position(x - 1, y - 1));
         }
         return movements;
     }
 
-    public ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
+    private ArrayList<Position> getEatingMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<Position>();
         System.out.println(currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).getType() == Type.EMPTY);
@@ -80,7 +105,47 @@ public class Man extends Piece {
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).isFromTeamWhite() &&
                 currentBoard.getSpecificPiece(new Position(x + 2, y - 2)).getType() == Type.EMPTY) {
             movements.add(new Position(x + 2, y - 2));
-        }else if(currentBoard.getSpecificPiece(new Position(x +1, y - 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()){
+        }
+        return movements;
+    }
+
+    private ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
+        int x = this.getX(), y = this.getY();
+        ArrayList<Position> movements = new ArrayList<Position>();
+        System.out.print(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY);
+        if(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()) {
+
+            movements.add(new Position(x + 1, y + 1));
+        }
+        return movements;
+    }
+
+    private ArrayList<Position> getMovementsToTopRight(Board currentBoard){
+        int x = this.getX(), y = this.getY();
+        ArrayList<Position> movements = new ArrayList<Position>();
+        System.out.println(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY);
+        if(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY && this.isFromTeamWhite()) {
+            movements.add(new Position(x - 1, y + 1));
+
+        }
+        return movements;
+    }
+
+    private ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
+        int x = this.getX(), y = this.getY();
+        ArrayList<Position> movements = new ArrayList<Position>();
+        System.out.println(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY);
+        if(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY && this.isFromTeamWhite()){
+            movements.add(new Position(x - 1, y - 1));
+        }
+        return movements;
+    }
+
+    private ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
+        int x = this.getX(), y = this.getY();
+        ArrayList<Position> movements = new ArrayList<Position>();
+        System.out.println(currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).getType() == Type.EMPTY);
+        if(currentBoard.getSpecificPiece(new Position(x +1, y - 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()){
             movements.add(new Position(x + 1, y - 1));
         }
         return movements;

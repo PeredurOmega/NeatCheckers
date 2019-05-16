@@ -4,7 +4,7 @@ import enums.Type;
 
 import java.util.Random;
 
-public class Board {
+public class Board implements Cloneable{
 
     private Player playerA;
     private Player playerB;
@@ -91,5 +91,17 @@ public class Board {
     }
     public void eat(Position eatPosition){
         game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());
+    }
+    public void addPiece(Piece piece){
+        game[piece.getX()][piece.getY()] = piece;
+    }
+    public Object clone() {
+        Board newBoard = null;
+        try {
+            newBoard = (Board)super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return newBoard;
     }
 }

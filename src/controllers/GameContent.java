@@ -141,9 +141,9 @@ public class GameContent extends JPanel implements MouseListener {
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
         for(Position position: positions){
-            graphics1.clearRect(position.getY()*60, position.getX()*60,60,60);
+            graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
             graphics1.setColor(new Color(10504971));
-            graphics1.fillRect(position.getY()*60, position.getX()*60,60,60);
+            graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
         }
     }
 
@@ -151,9 +151,9 @@ public class GameContent extends JPanel implements MouseListener {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
-        graphics1.clearRect(position.getY()*60, position.getX()*60,60,60);
+        graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
         graphics1.setColor(new Color(10504971));
-        graphics1.fillRect(position.getY()*60, position.getX()*60,60,60);
+        graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
     }
 
     public void drawAvailablePositions(ArrayList<Position> positions) {
@@ -162,7 +162,7 @@ public class GameContent extends JPanel implements MouseListener {
         graphics1.setColor(Color.GREEN);
         cleanPositions(shownMovements);
         for(Position position: positions){
-            graphics1.fillRect(position.getY()*60, position.getX()*60,60,60);
+            graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
         }
         this.shownMovements = positions;
     }
@@ -191,10 +191,14 @@ public class GameContent extends JPanel implements MouseListener {
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         if(piece.isFromTeamWhite()){
             graphics1.setColor(Color.WHITE);
-            graphics1.fillOval(5+toPosition.getY()*60,5+toPosition.getX()*60,50,50);
+            graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);
+            if(piece.getType() == Type.KING)
+                graphics1.drawImage(blackCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
         }else{
             graphics1.setColor(Color.BLACK);
-            graphics1.fillOval(5+toPosition.getY()*60,5+toPosition.getX()*60,50,50);
+            graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);
+            if(piece.getType() == Type.KING)
+                graphics1.drawImage(whiteCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
         }
     }
 }

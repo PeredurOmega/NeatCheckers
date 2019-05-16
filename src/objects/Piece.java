@@ -37,4 +37,6 @@ public class Piece extends Position {
         isFromTeamWhite = fromTeamWhite;
     }
 
+    public boolean isCoronationTime(){ return false;}
+
 }

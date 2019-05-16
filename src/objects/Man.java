@@ -151,6 +151,7 @@ public class Man extends Piece {
         return movements;
     }
 
+    @Override
     public boolean isCoronationTime(){
         return (this.getX() == 0 && this.isFromTeamWhite() || this.getX() == 9 && !this.isFromTeamWhite());
     }

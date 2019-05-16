@@ -19,6 +19,12 @@ public class GameController implements GameListener {
     public void onClick(Position toPosition) {
         Piece piece = board.getSpecificPiece(toPosition);
         System.out.println(piece.getType());
+
+        if(piece.isCoronationTime()){
+            board.promote(piece);
+            System.out.println("Done");
+        }
+
         if (showAvailableMode) {
             showAvailableMode = !displayer.movePiece(fromPosition, toPosition, board.getSpecificPiece(fromPosition));
             if(!showAvailableMode)

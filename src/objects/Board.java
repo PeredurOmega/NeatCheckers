@@ -83,6 +83,10 @@ public class Board implements Cloneable{
         this.playerB = playerB;
     }
 
+    public void promote(Piece piece){
+        game[piece.getX()][piece.getY()] = new King(piece.getX(),piece.getY(),piece.isFromTeamWhite());
+    }
+
     public void move(Position fromPosition, Position toPosition){
         game[toPosition.getX()][toPosition.getY()] = game[fromPosition.getX()][fromPosition.getY()];
         game[toPosition.getX()][toPosition.getY()].setX(toPosition.getX());

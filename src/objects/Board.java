@@ -124,4 +124,18 @@ public class Board{
     public void addPiece(Piece piece){
         this.game[piece.getX()][piece.getY()] = piece;
     }
+
+    public boolean couldEat() {
+        for(int i = 0; i < row; i++){
+            for(int a = (i+1)%2; a < col; a+= 2){
+                Piece piece = game[i][a];
+                if((piece.getType() == Type.MAN || piece.getType() == Type.KING) && piece.isFromTeamWhite() == isTeamWhiteTurn()){
+                    if(piece.getAtePositions(this).size() > 0){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

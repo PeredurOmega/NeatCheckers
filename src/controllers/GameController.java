@@ -2,25 +2,40 @@ package controllers;
 
 import enums.Type;
 import graphics.Display;
+import graphics.Toast;
 import interfaces.GameListener;
 import objects.Board;
 import objects.Piece;
 import objects.Position;
 
+import java.util.ArrayList;
+
 public class GameController implements GameListener {
     private Display displayer;
     private Board board;
     private boolean showAvailableMode = false;
-    private boolean isRightTurn;
     private Position fromPosition;
+    private boolean couldEat;
 
     @Override
     public void onClick(Position toPosition) {
         if (showAvailableMode) {
             Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
-            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, selectedPiece.getAtePositions(this.board));
-            if(!showAvailableMode)
+            ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board);
+            if((eatenPositions.size() > 0 && couldEat) || !couldEat){
+                showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions);
+            }else{
+                Thread thread = new Thread(){
+                    public void run(){
+                        new Toast("Dans cette position vous devez manger un pion.", 0, 0).showToastText();
+                    }
+                };
+                thread.start();
+            }
+            if(!showAvailableMode) {
                 this.board.setTeamWhiteTurn(!this.board.isTeamWhiteTurn());
+                couldEat = this.board.couldEat();
+            }
             if (showAvailableMode) {
                 displayer.cleanPossibilities();
                 showAvailableMode = false;
@@ -28,7 +43,7 @@ public class GameController implements GameListener {
         } else {
             Piece piece = this.board.getSpecificPiece(toPosition);
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
-                isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
+                boolean isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
                 if(isRightTurn) {
                     fromPosition = toPosition;
                     showAvailableMode = true;

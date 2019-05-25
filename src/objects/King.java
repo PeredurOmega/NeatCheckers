@@ -12,7 +12,7 @@ public class King extends Piece {
 
     @Override
     public ArrayList<Position> getAvailableMovements(Board currentBoard) {
-        ArrayList<Position> positions = new ArrayList<Position>();
+        ArrayList<Position> positions = new ArrayList<>();
         positions.addAll(getMovementsToBottomLeft(currentBoard));
         positions.addAll(getMovementsToBottomRight(currentBoard));
         positions.addAll(getMovementsToTopLeft(currentBoard));
@@ -27,12 +27,12 @@ public class King extends Piece {
 
     @Override
     public ArrayList<Position> getAllEatingMovements(Board board){
-        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        ArrayList<Position> eatingPositions = new ArrayList<>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
         eatingPositions.addAll(getEatingMovementsToBottomRight(board));
         eatingPositions.addAll(getEatingMovementsToTopLeft(board));
         eatingPositions.addAll(getEatingMovementsToTopRight(board));
-        ArrayList<Position> eatingPositionsToSend = new ArrayList<Position>();
+        ArrayList<Position> eatingPositionsToSend = new ArrayList<>();
         if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(board);
@@ -65,22 +65,22 @@ public class King extends Piece {
             }
             return eatingPositionsToSend;
         }else{
-            return new ArrayList<Position>();
+            return new ArrayList<>();
         }
     }
 
     @Override
     public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
-        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        ArrayList<Position> eatingPositions = new ArrayList<>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToBottomRight(currentBoard));
         eatingPositions.addAll(getEatingMovementsToTopLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToTopRight(currentBoard));
-        ArrayList<Position> atePositionsToSend = new ArrayList<Position>();
+        ArrayList<Position> atePositionsToSend = new ArrayList<>();
         if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(currentBoard);
-                ArrayList<Position> tempAtePositionsToSend = new ArrayList<Position>();
+                ArrayList<Position> tempAtePositionsToSend = new ArrayList<>();
                 if(toPosition.getY() < this.getY() && toPosition.getX() < this.getX()){ // Bottom Left
                     for (int x = this.getX() - 1, y = this.getY() - 1; x > toPosition.getX() && y > toPosition.getY(); x--, y--) {
                         temporaryBoard.eat(new Position(x, y));
@@ -117,12 +117,12 @@ public class King extends Piece {
             }
             return atePositionsToSend;
         }else{
-            return new ArrayList<Position>();
+            return new ArrayList<>();
         }
     }
 
     private ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() + 1, y = this.getY() + 1;
         while ((x < 10 && y < 10) && currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
             movements.add(new Position(x, y));
@@ -133,7 +133,7 @@ public class King extends Piece {
     }
 
     private ArrayList<Position> getMovementsToTopRight(Board currentBoard){
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() - 1, y = this.getY() + 1;
         while ((x >= 0 && y < 10) && currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
             movements.add(new Position(x, y));
@@ -144,7 +144,7 @@ public class King extends Piece {
     }
 
     private ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() - 1, y = this.getY() - 1;
         while ((x >= 0 && y >= 0) && currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
             movements.add(new Position(x, y));
@@ -155,7 +155,7 @@ public class King extends Piece {
     }
 
     private ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() + 1, y = this.getY() - 1;
         while ((x < 10 && y >= 0) && currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
             movements.add(new Position(x, y));
@@ -185,7 +185,7 @@ public class King extends Piece {
                 yFromEating = y;
             }
         }
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         while (x > xFromEating && y > yFromEating){
             if (currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
                 movements.add(new Position(x, y));
@@ -216,7 +216,7 @@ public class King extends Piece {
                 yFromEating = y;
             }
         }
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         while (x > xFromEating && y < yFromEating){
             if (currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
                 movements.add(new Position(x, y));
@@ -247,7 +247,7 @@ public class King extends Piece {
                 yFromEating = y;
             }
         }
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         while (x < xFromEating && y < yFromEating){
             if (currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
                 movements.add(new Position(x, y));
@@ -278,7 +278,7 @@ public class King extends Piece {
                 yFromEating = y;
             }
         }
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         while (x < xFromEating && y > yFromEating){
             if (currentBoard.getSpecificPiece(new Position(x, y)).getType() == Type.EMPTY) {
                 movements.add(new Position(x, y));

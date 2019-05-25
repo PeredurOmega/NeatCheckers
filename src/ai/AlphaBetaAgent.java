@@ -12,7 +12,7 @@ public class AlphaBetaAgent {
     /*
      * Return an integer giving a perspective of the current board for a given team
      */
-    public int evalState(Board board) {
+    private int evalState(Board board) {
         int value = 0;
         for(int x = 0; x < 10; x++) {
             for(int y = 0; y < 10; y++) {
@@ -48,15 +48,14 @@ public class AlphaBetaAgent {
         boolean couldEat = currentBoard.couldEat();
 
         //The size is wide enough to be able to store all equal possible moves (the max possible moves should be 218)
-        ArrayList<Position> bestTos = new ArrayList<Position>();
-        ArrayList<Piece> bestPieces = new ArrayList<Piece>();
+        ArrayList<Position> bestTos = new ArrayList<>();
+        ArrayList<Piece> bestPieces = new ArrayList<>();
         int p = 0; //To current index of bestTo and bestPiece
 
-        int depth = 8;
+        int depth = 10;
 
         System.out.println("INITIAL SCORE " + initialValue);
 
-        int a = 0;
         for(int x = 0; x < 10; x++) {
             for(int y = 0; y < 10; y++) {
                 Piece piece = currentBoard.getSpecificPiece(new Position(x, y));

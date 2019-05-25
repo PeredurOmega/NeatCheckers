@@ -1,7 +1,6 @@
 package objects;
 
 import enums.Type;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public class Man extends Piece {
 
     @Override
     public ArrayList<Position> getAvailableMovements(Board currentBoard) {
-        ArrayList<Position> positions = new ArrayList<Position>();
+        ArrayList<Position> positions = new ArrayList<>();
         positions.addAll(getMovementsToBottomLeft(currentBoard));
         positions.addAll(getMovementsToBottomRight(currentBoard));
         positions.addAll(getMovementsToTopLeft(currentBoard));
@@ -30,16 +29,16 @@ public class Man extends Piece {
 
     @Override
     public ArrayList<Position> getAllEatingMovements(Board board){
-        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        ArrayList<Position> eatingPositions = new ArrayList<>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
         eatingPositions.addAll(getEatingMovementsToBottomRight(board));
         eatingPositions.addAll(getEatingMovementsToTopLeft(board));
         eatingPositions.addAll(getEatingMovementsToTopRight(board));
-        ArrayList<Position> eatingPositionsToSend = new ArrayList<Position>();
+        ArrayList<Position> eatingPositionsToSend = new ArrayList<>();
         if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(board);
-                Position eatingPiecePosition = new Position((int)((this.getX() + toPosition.getX())/2), (int)((this.getY() + toPosition.getY())/2));
+                Position eatingPiecePosition = new Position((this.getX() + toPosition.getX())/2, (this.getY() + toPosition.getY())/2);
                 temporaryBoard.eat(eatingPiecePosition);
                 temporaryBoard.eat(this.getPosition());
                 Man man = new Man(toPosition.getX(), toPosition.getY(), this.isFromTeamWhite());
@@ -53,22 +52,22 @@ public class Man extends Piece {
             }
             return eatingPositionsToSend;
         }else{
-            return new ArrayList<Position>();
+            return new ArrayList<>();
         }
     }
 
     @Override
     public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
-        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        ArrayList<Position> eatingPositions = new ArrayList<>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToBottomRight(currentBoard));
         eatingPositions.addAll(getEatingMovementsToTopLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToTopRight(currentBoard));
-        ArrayList<Position> atePositionsToSend = new ArrayList<Position>();
+        ArrayList<Position> atePositionsToSend = new ArrayList<>();
         if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(currentBoard);
-                Position eatenPiecePosition = new Position((int)((this.getX() + toPosition.getX())/2), (int)((this.getY() + toPosition.getY())/2));
+                Position eatenPiecePosition = new Position((this.getX() + toPosition.getX())/2, (this.getY() + toPosition.getY())/2);
                 atePositionsToSend.add(eatenPiecePosition);
                 temporaryBoard.eat(eatenPiecePosition);
                 temporaryBoard.eat(this.getPosition());
@@ -83,13 +82,13 @@ public class Man extends Piece {
             }
             return atePositionsToSend;
         }else{
-            return new ArrayList<Position>();
+            return new ArrayList<>();
         }
     }
 
     private ArrayList<Position> getEatingMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if ((currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.MAN ||
                 currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.KING) &&
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).isFromTeamWhite()&&
@@ -101,7 +100,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getEatingMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if ((currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.MAN ||
                  currentBoard.getSpecificPiece(new Position(x-1, y+1)).getType() == Type.KING) &&
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).isFromTeamWhite() &&
@@ -113,7 +112,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getEatingMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if((currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.MAN ||
                 currentBoard.getSpecificPiece(new Position(x-1, y-1)).getType() == Type.KING) &&
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).isFromTeamWhite() &&
@@ -125,7 +124,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getEatingMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if((currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).getType() == Type.MAN ||
                 currentBoard.getSpecificPiece(new Position(x+1, y-1)).getType() == Type.KING) &&
                 this.isFromTeamWhite() != currentBoard.getSpecificPiece(new Position(x + 1, y - 1)).isFromTeamWhite() &&
@@ -137,7 +136,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if(currentBoard.getSpecificPiece(new Position(x + 1, y + 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()) {
 
             movements.add(new Position(x + 1, y + 1));
@@ -147,7 +146,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if(currentBoard.getSpecificPiece(new Position(x - 1, y + 1)).getType() == Type.EMPTY && this.isFromTeamWhite()) {
             movements.add(new Position(x - 1, y + 1));
 
@@ -157,7 +156,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if(currentBoard.getSpecificPiece(new Position(x - 1, y - 1)).getType() == Type.EMPTY && this.isFromTeamWhite()){
             movements.add(new Position(x - 1, y - 1));
         }
@@ -166,7 +165,7 @@ public class Man extends Piece {
 
     private ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
-        ArrayList<Position> movements = new ArrayList<Position>();
+        ArrayList<Position> movements = new ArrayList<>();
         if(currentBoard.getSpecificPiece(new Position(x +1, y - 1)).getType() == Type.EMPTY && !this.isFromTeamWhite()){
             movements.add(new Position(x + 1, y - 1));
         }

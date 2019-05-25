@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Piece extends Position {
 
-    private Type type;
+    private final Type type;
     private boolean isFromTeamWhite;
 
-    public Piece(int vX, int vY, Type type, boolean vIsFromTeamWhite) {
+    Piece(int vX, int vY, Type type, boolean vIsFromTeamWhite) {
         super(vX, vY);
         this.type = type;
         this.isFromTeamWhite = vIsFromTeamWhite;
@@ -24,10 +24,10 @@ public class Piece extends Position {
     }
 
     public ArrayList<Position> getAvailableMovements(Board currentBoard){
-        return new ArrayList<Position>();
+        return new ArrayList<>();
     }
     public ArrayList<Position> getAllEatingMovements(Board currentBoard){
-        return new ArrayList<Position>();
+        return new ArrayList<>();
     }
 
     @Override
@@ -42,6 +42,6 @@ public class Piece extends Position {
     public boolean isCoronationTime(){ return false;}
 
     public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
-        return new ArrayList<Position>();
+        return new ArrayList<>();
     }
 }

@@ -2,10 +2,8 @@ package objects;
 
 import enums.AgentType;
 
-import java.util.ArrayList;
-
 public class Player {
-    private boolean began;
+    private final boolean began;
     private AgentType agentType;
 
     public Player(boolean vBegan, AgentType vAgentType){

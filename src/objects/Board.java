@@ -1,6 +1,7 @@
 package objects;
 
 import enums.Type;
+import interfaces.GameListener;
 
 import java.util.Random;
 
@@ -111,6 +112,10 @@ public class Board{
             this.game[toPosition.getX()][toPosition.getY()] = new King(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
         }
         this.game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
+
+        if(this.game[toPosition.getX()][toPosition.getY()].isCoronationTime()){
+            this.promote(this.game[toPosition.getX()][toPosition.getY()]);
+        }
     }
     public void eat(Position eatPosition){
         this.game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());

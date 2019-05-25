@@ -167,11 +167,13 @@ public class GameContent extends JPanel implements MouseListener {
 
     public boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
         if(shownMovements.contains(toPosition)){
-            for(Position afterEatingPosition: eatenPositions){
-                cleanPosition(afterEatingPosition);
+            for(Position eatenPosition: eatenPositions){
+                cleanPosition(eatenPosition);
+                gameListener.eatOnBoard(eatenPosition);
             }
             cleanPositions(shownMovements);
             gameListener.moveOnBoard(fromPosition, toPosition);
+            piece.setPosition(toPosition);
             drawMove(fromPosition, toPosition, piece);
             shownMovements = new ArrayList<Position>();
             return true;
@@ -187,13 +189,15 @@ public class GameContent extends JPanel implements MouseListener {
         if(piece.isFromTeamWhite()){
             graphics1.setColor(Color.WHITE);
             graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);
-            if(piece.getType() == Type.KING)
+            if(piece.getType() == Type.KING || piece.isCoronationTime()){
                 graphics1.drawImage(blackCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
+            }
         }else{
             graphics1.setColor(Color.BLACK);
             graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);
-            if(piece.getType() == Type.KING)
+            if(piece.getType() == Type.KING || piece.isCoronationTime()){
                 graphics1.drawImage(whiteCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
+            }
         }
     }
 }

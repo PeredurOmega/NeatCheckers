@@ -16,12 +16,6 @@ public class GameController implements GameListener {
 
     @Override
     public void onClick(Position toPosition) {
-        Piece piece = this.board.getSpecificPiece(toPosition);
-        if(piece.isCoronationTime()){
-            board.promote(piece);
-            System.out.println("Done");
-        }
-
         if (showAvailableMode) {
             Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
             showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, selectedPiece.getAtePositions(this.board));
@@ -32,6 +26,7 @@ public class GameController implements GameListener {
                 showAvailableMode = false;
             }
         } else {
+            Piece piece = this.board.getSpecificPiece(toPosition);
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
                 isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
                 if(isRightTurn) {

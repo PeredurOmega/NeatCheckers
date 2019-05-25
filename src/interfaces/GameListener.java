@@ -1,5 +1,6 @@
 package interfaces;
 
+import objects.Piece;
 import objects.Position;
 
 public interface GameListener {

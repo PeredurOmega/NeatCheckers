@@ -38,4 +38,9 @@ public class Position {
     public Position getPosition(){
         return this;
     }
+
+    public void setPosition(Position toPosition) {
+        this.x = toPosition.getX();
+        this.y = toPosition.getY();
+    }
 }

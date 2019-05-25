@@ -17,29 +17,14 @@ public class GameController implements GameListener {
     @Override
     public void onClick(Position toPosition) {
         Piece piece = this.board.getSpecificPiece(toPosition);
-        //System.out.println(piece.getType());
-
-       /* if(piece.isCoronationTime()){
+        if(piece.isCoronationTime()){
             board.promote(piece);
             System.out.println("Done");
-        }*/
-
-       /*
-       if(toPosition.getY()==3){
-           Piece test = board.getSpecificPiece(fromPosition); //TODO RETRACT
-           System.out.println("WHITE3= " + test.isFromTeamWhite());
-           System.out.println("fromPosition3= " + fromPosition.getX() + " " + fromPosition.getY());
-
-           System.out.println("WHITE4= " + piece.isFromTeamWhite());
-           System.out.println("toPosition4= " + toPosition.getX() + " " + toPosition.getY());
-       }*/
+        }
 
         if (showAvailableMode) {
-            Piece test = this.board.getSpecificPiece(fromPosition); //TODO RETRACT
-            System.out.println("WHITE3= " + test.isFromTeamWhite());
-            System.out.println("TYPE3= " + test.getType());
-            System.out.println("fromPosition3= " + fromPosition.getX() + " " + fromPosition.getY());
-            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, test);
+            Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
+            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, selectedPiece.getAtePositions(this.board));
             if(!showAvailableMode)
                 this.board.setTeamWhiteTurn(!this.board.isTeamWhiteTurn());
             if (showAvailableMode) {
@@ -47,8 +32,6 @@ public class GameController implements GameListener {
                 showAvailableMode = false;
             }
         } else {
-            System.out.println("WHITE3= " + piece.isFromTeamWhite());
-            System.out.println("toPosition3= " + toPosition.getX() + " " + toPosition.getY());
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
                 isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
                 if(isRightTurn) {

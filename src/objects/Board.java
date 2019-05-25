@@ -111,9 +111,6 @@ public class Board{
             this.game[toPosition.getX()][toPosition.getY()] = new King(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
         }
         this.game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
-        System.out.println("WHITE =" + this.game[toPosition.getX()][toPosition.getY()].isFromTeamWhite());
-        System.out.println("fromPosition =" + fromPosition.getX()+ " " + fromPosition.getY());
-        System.out.println("toPosition =" + toPosition.getX() + " " +toPosition.getY());
     }
     public void eat(Position eatPosition){
         this.game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());

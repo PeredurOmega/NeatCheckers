@@ -165,16 +165,13 @@ public class GameContent extends JPanel implements MouseListener {
         this.shownMovements = positions;
     }
 
-    public boolean movePiece(Position fromPosition, Position toPosition, Piece piece) {
+    public boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
         if(shownMovements.contains(toPosition)){
-            gameListener.moveOnBoard(fromPosition, toPosition);
-            if(Math.abs(fromPosition.getX()-toPosition.getX()) == 2 && Math.abs(fromPosition.getY()-toPosition.getY()) == 2){
-                Position eatingPosition = new Position((int)((fromPosition.getX() + toPosition.getX())/2), (int)((fromPosition.getY() + toPosition.getY())/2));
-                cleanPosition(eatingPosition);
-                gameListener.eatOnBoard(eatingPosition);
+            for(Position afterEatingPosition: eatenPositions){
+                cleanPosition(afterEatingPosition);
             }
             cleanPositions(shownMovements);
-
+            gameListener.moveOnBoard(fromPosition, toPosition);
             drawMove(fromPosition, toPosition, piece);
             shownMovements = new ArrayList<Position>();
             return true;

@@ -1,7 +1,6 @@
 package objects;
 
 import enums.Type;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,6 @@ public class Man extends Piece {
 
     @Override
     public ArrayList<Position> getAvailableMovements(Board currentBoard) {
-        //TODO Use recursivity to get all movements with several components
         ArrayList<Position> positions = new ArrayList<Position>();
         positions.addAll(getMovementsToBottomLeft(currentBoard));
         positions.addAll(getMovementsToBottomRight(currentBoard));
@@ -21,11 +19,24 @@ public class Man extends Piece {
         positions.addAll(getMovementsToTopRight(currentBoard));
 
         ArrayList<Position> eatingPositions = getAllEatingMovements(currentBoard);
-        ArrayList<Position> eatingPositionsToSend = new ArrayList<Position>();
 
         if(eatingPositions.size() > 0){
+            return eatingPositions;
+        }else{
+            return positions;
+        }
+    }
+
+    private ArrayList<Position> getAllEatingMovements(Board board){
+        ArrayList<Position> eatingPositions = new ArrayList<Position>();
+        eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
+        eatingPositions.addAll(getEatingMovementsToBottomRight(board));
+        eatingPositions.addAll(getEatingMovementsToTopLeft(board));
+        eatingPositions.addAll(getEatingMovementsToTopRight(board));
+        ArrayList<Position> eatingPositionsToSend = new ArrayList<Position>();
+        if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
-                Board temporaryBoard = new Board(currentBoard);
+                Board temporaryBoard = new Board(board);
                 Position eatingPiecePosition = new Position((int)((this.getX() + toPosition.getX())/2), (int)((this.getY() + toPosition.getY())/2));
                 temporaryBoard.eat(eatingPiecePosition);
                 temporaryBoard.eat(this.getPosition());
@@ -40,17 +51,36 @@ public class Man extends Piece {
             }
             return eatingPositionsToSend;
         }else{
-            return positions;
+            return new ArrayList<Position>();
         }
     }
 
-    private ArrayList<Position> getAllEatingMovements(Board board){
+    @Override
+    public ArrayList<Position> getAtePositions(Board currentBoard){
         ArrayList<Position> eatingPositions = new ArrayList<Position>();
-        eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
-        eatingPositions.addAll(getEatingMovementsToBottomRight(board));
-        eatingPositions.addAll(getEatingMovementsToTopLeft(board));
-        eatingPositions.addAll(getEatingMovementsToTopRight(board));
-        return eatingPositions;
+        eatingPositions.addAll(getEatingMovementsToBottomLeft(currentBoard));
+        eatingPositions.addAll(getEatingMovementsToBottomRight(currentBoard));
+        eatingPositions.addAll(getEatingMovementsToTopLeft(currentBoard));
+        eatingPositions.addAll(getEatingMovementsToTopRight(currentBoard));
+        ArrayList<Position> atePositionsToSend = new ArrayList<Position>();
+        if(eatingPositions.size() > 0){
+            for(Position toPosition: eatingPositions){
+                Board temporaryBoard = new Board(currentBoard);
+                Position eatenPiecePosition = new Position((int)((this.getX() + toPosition.getX())/2), (int)((this.getY() + toPosition.getY())/2));
+                atePositionsToSend.add(eatenPiecePosition);
+                temporaryBoard.eat(eatenPiecePosition);
+                temporaryBoard.eat(this.getPosition());
+                Man man = new Man(toPosition.getX(), toPosition.getY(), this.isFromTeamWhite());
+                temporaryBoard.addPiece(man);
+                ArrayList<Position> nextEatingPosition = man.getAtePositions(temporaryBoard);
+                if(nextEatingPosition.size() > 0){
+                    atePositionsToSend.addAll(nextEatingPosition);
+                }
+            }
+            return atePositionsToSend;
+        }else{
+            return new ArrayList<Position>();
+        }
     }
 
     private ArrayList<Position> getEatingMovementsToBottomRight(Board currentBoard){

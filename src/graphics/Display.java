@@ -39,7 +39,7 @@ public class Display extends JFrame {
         gameContent.cleanPossibilities();
     }
 
-    public Boolean movePiece(Position fromPosition, Position toPosition, Piece piece) {
-        return gameContent.movePiece(fromPosition, toPosition, piece);
+    public Boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
+        return gameContent.movePiece(fromPosition, toPosition, piece, eatenPositions);
     }
 }

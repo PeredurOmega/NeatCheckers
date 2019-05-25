@@ -9,6 +9,11 @@ public class Position {
         this.y = vY;
     }
 
+    public Position(Position position){
+        this.x = position.getX();
+        this.y = position.getY();
+    }
+
     public String toString(){
         return x+" "+y;
     }

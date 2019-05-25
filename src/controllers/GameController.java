@@ -1,46 +1,63 @@
 package controllers;
 
+import ai.AlphaBetaAgent;
+import enums.AgentType;
 import enums.Type;
 import graphics.Display;
+import graphics.Toast;
 import interfaces.GameListener;
-import javafx.geometry.Pos;
 import objects.Board;
 import objects.Piece;
 import objects.Position;
 
+import java.util.ArrayList;
+
 public class GameController implements GameListener {
-    Display displayer;
-    Board board;
-    boolean mainMenu = true;
-    boolean showAvailableMode = false;
-    boolean isRightTurn;
-    Position fromPosition;
+    private Display displayer;
+    private Board board;
+    private boolean showAvailableMode = false;
+    private Position fromPosition;
+    private boolean couldEat;
 
     @Override
     public void onClick(Position toPosition) {
-        Piece piece = board.getSpecificPiece(toPosition);
-        System.out.println(piece.getType());
-
-        if(piece.isCoronationTime()){
-            board.promote(piece);
-            System.out.println("Done");
-        }
-
         if (showAvailableMode) {
-            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, board.getSpecificPiece(fromPosition));
-            if(!showAvailableMode)
-                board.setTeamWhiteTurn(!board.isTeamWhiteTurn());
+            Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
+            ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board, toPosition);
+            if((eatenPositions.size() > 0 && couldEat) || !couldEat){
+                showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions, board.isAiTurn());
+            }else{
+                Thread thread = new Thread(){
+                    public void run(){
+                        new Toast("Dans cette position vous devez manger un pion.", 0, 0).showToastText();
+                    }
+                };
+                thread.start();
+            }
+            if(!showAvailableMode) {
+                this.board.rotatePlayer();
+                couldEat = this.board.couldEat();
+                if(this.board.getPlayer().getAgentType() == AgentType.ALPHABETA){
+                    AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent();
+                    Position[] positions = alphaBetaAgent.play(this.board);
+                    System.out.println(positions[0] + " " +  positions[1]);
+                    fromPosition = new Position(positions[0]);
+                    showAvailableMode = true;
+                    onClick(positions[1]);
+                }
+            }
             if (showAvailableMode) {
                 displayer.cleanPossibilities();
                 showAvailableMode = false;
             }
         } else {
+            Piece piece = this.board.getSpecificPiece(toPosition);
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
-                isRightTurn = piece.isFromTeamWhite() == board.isTeamWhiteTurn();
+                boolean isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
                 if(isRightTurn) {
                     fromPosition = toPosition;
                     showAvailableMode = true;
-                    displayer.showPossibilities(piece.getAvailableMovements(board));
+                    displayer.showPossibilities(piece.getAvailableMovements(this.board));
                 }
             }
         }
@@ -57,8 +74,7 @@ public class GameController implements GameListener {
     }
 
     public void startGame(){
-        board = new Board(new Position(7,4));
-        //board = new Board();
-        displayer = new Display(board, GameController.this);
+        this.board = new Board();
+        this.displayer = new Display(this.board, GameController.this);
     }
 }

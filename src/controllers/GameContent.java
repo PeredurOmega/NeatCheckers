@@ -166,6 +166,9 @@ public class GameContent extends JPanel implements MouseListener {
     }
 
     public boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
+        System.out.println("fromPosition   " + fromPosition);
+        System.out.println("toPosition   " + toPosition);
+        System.out.println("eatenPositions   " + eatenPositions);
         if(shownMovements.contains(toPosition)){
             for(Position eatenPosition: eatenPositions){
                 cleanPosition(eatenPosition);

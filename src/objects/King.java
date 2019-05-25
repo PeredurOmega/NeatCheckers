@@ -6,10 +6,9 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 
-    public King(int vX, int vY, boolean vIsFromWhiteTeam) {
+    King(int vX, int vY, boolean vIsFromWhiteTeam) {
         super(vX, vY,  Type.KING,vIsFromWhiteTeam);
     }
-
 
     @Override
     public ArrayList<Position> getAvailableMovements(Board currentBoard) {
@@ -82,22 +81,22 @@ public class King extends Piece {
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(currentBoard);
                 if(toPosition.getY() < this.getY() && toPosition.getX() < this.getX()){ // Bottom Left
-                    for (int x = this.getX(), y = this.getY(); x > toPosition.getX() && y > toPosition.getY(); x--, y--) {
+                    for (int x = this.getX() - 1, y = this.getY() - 1; x > toPosition.getX() && y > toPosition.getY(); x--, y--) {
                         temporaryBoard.eat(new Position(x, y));
                         atePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() > this.getY() && toPosition.getX() > this.getX()){ // Top Right
-                    for (int x = this.getX(), y = this.getY(); x < toPosition.getX() && y < toPosition.getY(); x++, y++) {
+                    for (int x = this.getX() + 1, y = this.getY() + 1; x < toPosition.getX() && y < toPosition.getY(); x++, y++) {
                         temporaryBoard.eat(new Position(x, y));
                         atePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() < this.getY() && toPosition.getX() > this.getX()){ // Bottom Right
-                    for (int x = this.getX(), y = this.getY(); x < toPosition.getX() && y > toPosition.getY(); x++, y--) {
+                    for (int x = this.getX() + 1, y = this.getY() - 1; x < toPosition.getX() && y > toPosition.getY(); x++, y--) {
                         temporaryBoard.eat(new Position(x, y));
                         atePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() > this.getY() && toPosition.getX() < this.getX()){ // Top Left
-                    for (int x = this.getX(), y = this.getY(); x > toPosition.getX() && y < toPosition.getY(); x--, y++) {
+                    for (int x = this.getX() - 1, y = this.getY() + 1; x > toPosition.getX() && y < toPosition.getY(); x--, y++) {
                         temporaryBoard.eat(new Position(x, y));
                         atePositionsToSend.add(new Position(x, y));
                     }

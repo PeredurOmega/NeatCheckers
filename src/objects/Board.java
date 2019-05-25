@@ -106,6 +106,7 @@ public class Board{
 
     public void move(Position fromPosition, Position toPosition){
         Piece fromPiece = this.game[fromPosition.getX()][fromPosition.getY()];
+        System.out.println(fromPiece.getType());
         if(fromPiece.getType() == Type.MAN){
             this.game[toPosition.getX()][toPosition.getY()] = new Man(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
         }else if(fromPiece.getType() == Type.KING){

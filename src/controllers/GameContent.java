@@ -15,23 +15,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class GameContent extends JPanel implements MouseListener {
 
-    private int sideSize;
-    private int caseSize;
-    private double pieceRatio;
-    private double crownRatio;
-    private int pieceGap;
-    private int crownGap;
-    private int pieceSize;
-    private int crownSize;
-    private Board b;
+    private final int sideSize;
+    private final int caseSize;
+    private final int pieceGap;
+    private final int crownGap;
+    private final int pieceSize;
+    private final int crownSize;
+    private final Board b;
     private Position clickedPos;
-    private GameListener gameListener;
-    private ArrayList<Position> shownMovements = new ArrayList<Position>();
+    private final GameListener gameListener;
+    private ArrayList<Position> shownMovements = new ArrayList<>();
     private BufferedImage whiteCrown;
     private BufferedImage blackCrown;
 
@@ -40,12 +36,12 @@ public class GameContent extends JPanel implements MouseListener {
         this.gameListener = gm;
         sideSize = (Toolkit.getDefaultToolkit().getScreenSize().height/600)*600;
         caseSize = sideSize/b.getRow();
-        pieceRatio = 5/6d;
-        crownRatio = 1/2d;
-        pieceGap = (int)((1-pieceRatio)*caseSize/2);
-        crownGap = (int)((1-crownRatio)*caseSize/2);
-        pieceSize = (int)(pieceRatio*caseSize);
-        crownSize = (int)(crownRatio*caseSize);
+        double pieceRatio = 5 / 6d;
+        double crownRatio = 1 / 2d;
+        pieceGap = (int)((1- pieceRatio)*caseSize/2);
+        crownGap = (int)((1- crownRatio)*caseSize/2);
+        pieceSize = (int)(pieceRatio *caseSize);
+        crownSize = (int)(crownRatio *caseSize);
         clickedPos = new Position(-1,-1);
         try{
             whiteCrown = ImageIO.read(new File("res/white-crown.png"));
@@ -136,7 +132,7 @@ public class GameContent extends JPanel implements MouseListener {
         cleanPositions(this.shownMovements);
     }
 
-    public void cleanPositions(ArrayList<Position> positions) {
+    private void cleanPositions(ArrayList<Position> positions) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
@@ -147,7 +143,7 @@ public class GameContent extends JPanel implements MouseListener {
         }
     }
 
-    public void cleanPosition(Position position) {
+    private void cleanPosition(Position position) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
@@ -176,7 +172,7 @@ public class GameContent extends JPanel implements MouseListener {
             cleanPositions(shownMovements);
             drawMove(fromPosition, toPosition, piece);
             gameListener.moveOnBoard(fromPosition, toPosition);
-            shownMovements = new ArrayList<Position>();
+            shownMovements = new ArrayList<>();
             return true;
         }else{
             return false;

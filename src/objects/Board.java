@@ -2,9 +2,6 @@ package objects;
 
 import enums.AgentType;
 import enums.Type;
-import interfaces.GameListener;
-
-import java.util.Random;
 
 public class Board{
 
@@ -92,7 +89,7 @@ public class Board{
         }
     }
 
-    public void promote(Piece piece){
+    private void promote(Piece piece){
         this.game[piece.getX()][piece.getY()] = new King(piece.getX(),piece.getY(),piece.isFromTeamWhite());
     }
 

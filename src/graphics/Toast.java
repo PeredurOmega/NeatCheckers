@@ -5,7 +5,7 @@ import javax.swing.*;
 public class Toast extends JFrame {
 
     String s;
-    private JWindow w;
+    private final JWindow w;
 
     public Toast(final String s, int x, int y)
     {

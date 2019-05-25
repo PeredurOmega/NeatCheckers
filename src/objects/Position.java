@@ -36,6 +36,9 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
+        if (getClass() != obj.getClass()){
+            return false;
+        }
         Position p = (Position) obj;
         return (p.getX() == x && p.getY() == y);
     }

@@ -130,7 +130,7 @@ public class Board{
             for(int a = (i+1)%2; a < col; a+= 2){
                 Piece piece = game[i][a];
                 if((piece.getType() == Type.MAN || piece.getType() == Type.KING) && piece.isFromTeamWhite() == isTeamWhiteTurn()){
-                    if(piece.getAtePositions(this).size() > 0){
+                    if(piece.getAtePositions(this, new Position(-1, -1)).size() > 0){
                         return true;
                     }
                 }

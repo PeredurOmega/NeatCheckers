@@ -21,7 +21,7 @@ public class GameController implements GameListener {
     public void onClick(Position toPosition) {
         if (showAvailableMode) {
             Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
-            ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board);
+            ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board, toPosition);
             if((eatenPositions.size() > 0 && couldEat) || !couldEat){
                 showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions);
             }else{

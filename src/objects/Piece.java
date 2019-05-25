@@ -38,7 +38,7 @@ public class Piece extends Position {
 
     public boolean isCoronationTime(){ return false;}
 
-    public ArrayList<Position> getAtePositions(Board currentBoard){
+    public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
         return new ArrayList<Position>();
     }
 }

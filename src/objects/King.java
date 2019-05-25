@@ -26,7 +26,6 @@ public class King extends Piece {
     }
 
     private ArrayList<Position> getAllEatingMovements(Board board){
-
         ArrayList<Position> eatingPositions = new ArrayList<Position>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
         eatingPositions.addAll(getEatingMovementsToBottomRight(board));
@@ -70,7 +69,7 @@ public class King extends Piece {
     }
 
     @Override
-    public ArrayList<Position> getAtePositions(Board currentBoard){
+    public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
         ArrayList<Position> eatingPositions = new ArrayList<Position>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToBottomRight(currentBoard));
@@ -80,33 +79,39 @@ public class King extends Piece {
         if(eatingPositions.size() > 0){
             for(Position toPosition: eatingPositions){
                 Board temporaryBoard = new Board(currentBoard);
+                ArrayList<Position> tempAtePositionsToSend = new ArrayList<Position>();
                 if(toPosition.getY() < this.getY() && toPosition.getX() < this.getX()){ // Bottom Left
                     for (int x = this.getX() - 1, y = this.getY() - 1; x > toPosition.getX() && y > toPosition.getY(); x--, y--) {
                         temporaryBoard.eat(new Position(x, y));
-                        atePositionsToSend.add(new Position(x, y));
+                        tempAtePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() > this.getY() && toPosition.getX() > this.getX()){ // Top Right
                     for (int x = this.getX() + 1, y = this.getY() + 1; x < toPosition.getX() && y < toPosition.getY(); x++, y++) {
                         temporaryBoard.eat(new Position(x, y));
-                        atePositionsToSend.add(new Position(x, y));
+                        tempAtePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() < this.getY() && toPosition.getX() > this.getX()){ // Bottom Right
                     for (int x = this.getX() + 1, y = this.getY() - 1; x < toPosition.getX() && y > toPosition.getY(); x++, y--) {
                         temporaryBoard.eat(new Position(x, y));
-                        atePositionsToSend.add(new Position(x, y));
+                        tempAtePositionsToSend.add(new Position(x, y));
                     }
                 }else if(toPosition.getY() > this.getY() && toPosition.getX() < this.getX()){ // Top Left
                     for (int x = this.getX() - 1, y = this.getY() + 1; x > toPosition.getX() && y < toPosition.getY(); x--, y++) {
                         temporaryBoard.eat(new Position(x, y));
-                        atePositionsToSend.add(new Position(x, y));
+                        tempAtePositionsToSend.add(new Position(x, y));
                     }
                 }
+                atePositionsToSend.addAll(tempAtePositionsToSend);
                 temporaryBoard.eat(this.getPosition());
                 King king = new King(toPosition.getX(), toPosition.getY(), this.isFromTeamWhite());
                 temporaryBoard.addPiece(king);
-                ArrayList<Position> nextEatingPosition = king.getAtePositions(temporaryBoard);
+                ArrayList<Position> nextEatingPosition = king.getAtePositions(temporaryBoard, selectedPosition);
                 if(nextEatingPosition.size() > 0){
                     atePositionsToSend.addAll(nextEatingPosition);
+                }else if(selectedPosition.getX() != -1 && !toPosition.equals(selectedPosition)){
+                    for(Position positionToRemove: tempAtePositionsToSend){
+                        atePositionsToSend.remove(positionToRemove);
+                    }
                 }
             }
             return atePositionsToSend;

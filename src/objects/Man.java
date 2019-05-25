@@ -1,6 +1,7 @@
 package objects;
 
 import enums.Type;
+import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,7 @@ public class Man extends Piece {
     }
 
     @Override
-    public ArrayList<Position> getAtePositions(Board currentBoard){
+    public ArrayList<Position> getAtePositions(Board currentBoard, Position selectedPosition){
         ArrayList<Position> eatingPositions = new ArrayList<Position>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(currentBoard));
         eatingPositions.addAll(getEatingMovementsToBottomRight(currentBoard));
@@ -72,9 +73,11 @@ public class Man extends Piece {
                 temporaryBoard.eat(this.getPosition());
                 Man man = new Man(toPosition.getX(), toPosition.getY(), this.isFromTeamWhite());
                 temporaryBoard.addPiece(man);
-                ArrayList<Position> nextEatingPosition = man.getAtePositions(temporaryBoard);
+                ArrayList<Position> nextEatingPosition = man.getAtePositions(temporaryBoard, selectedPosition);
                 if(nextEatingPosition.size() > 0){
                     atePositionsToSend.addAll(nextEatingPosition);
+                }else if(selectedPosition.getX() != -1 && !toPosition.equals(selectedPosition)){
+                    atePositionsToSend.remove(eatenPiecePosition);
                 }
             }
             return atePositionsToSend;

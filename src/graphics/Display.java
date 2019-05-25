@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Display extends JFrame {
 
     private GameContent gameContent;
+    private CardLayout card;
 
     public Display(Board b, GameListener gm){
         super("Checkers");
@@ -41,5 +42,9 @@ public class Display extends JFrame {
 
     public Boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
         return gameContent.movePiece(fromPosition, toPosition, piece, eatenPositions);
+    }
+
+    public void displayMenu(){
+
     }
 }

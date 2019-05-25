@@ -2,52 +2,45 @@ package controllers;
 
 import enums.Type;
 import graphics.Display;
-import graphics.Toast;
 import interfaces.GameListener;
+import javafx.geometry.Pos;
 import objects.Board;
 import objects.Piece;
 import objects.Position;
 
-import java.util.ArrayList;
-
 public class GameController implements GameListener {
-    private Display displayer;
-    private Board board;
-    private boolean showAvailableMode = false;
-    private Position fromPosition;
-    private boolean couldEat;
+    Display displayer;
+    Board board;
+    boolean mainMenu = true;
+    boolean showAvailableMode = false;
+    boolean isRightTurn;
+    Position fromPosition;
 
     @Override
     public void onClick(Position toPosition) {
+        Piece piece = board.getSpecificPiece(toPosition);
+        System.out.println(piece.getType());
+
+        if(piece.isCoronationTime()){
+            board.promote(piece);
+            System.out.println("Done");
+        }
+
         if (showAvailableMode) {
-            Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
-            ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board, toPosition);
-            if((eatenPositions.size() > 0 && couldEat) || !couldEat){
-                showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions);
-            }else{
-                Thread thread = new Thread(){
-                    public void run(){
-                        new Toast("Dans cette position vous devez manger un pion.", 0, 0).showToastText();
-                    }
-                };
-                thread.start();
-            }
-            if(!showAvailableMode) {
-                this.board.setTeamWhiteTurn(!this.board.isTeamWhiteTurn());
-                couldEat = this.board.couldEat();
-            }
+            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, board.getSpecificPiece(fromPosition));
+            if(!showAvailableMode)
+                board.setTeamWhiteTurn(!board.isTeamWhiteTurn());
             if (showAvailableMode) {
                 displayer.cleanPossibilities();
                 showAvailableMode = false;
             }
         } else {
-            Piece piece = this.board.getSpecificPiece(toPosition);
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
-                boolean isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
+                isRightTurn = piece.isFromTeamWhite() == board.isTeamWhiteTurn();
                 if(isRightTurn) {
                     fromPosition = toPosition;
                     showAvailableMode = true;
-                    displayer.showPossibilities(piece.getAvailableMovements(this.board));
+                    displayer.showPossibilities(piece.getAvailableMovements(board));
                 }
             }
         }
@@ -64,7 +57,8 @@ public class GameController implements GameListener {
     }
 
     public void startGame(){
-        this.board = new Board();
-        this.displayer = new Display(this.board, GameController.this);
+        board = new Board(new Position(7,4));
+        //board = new Board();
+        displayer = new Display(board, GameController.this);
     }
 }

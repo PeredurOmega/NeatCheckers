@@ -3,43 +3,58 @@ package controllers;
 import enums.Type;
 import graphics.Display;
 import interfaces.GameListener;
-import javafx.geometry.Pos;
 import objects.Board;
 import objects.Piece;
 import objects.Position;
 
 public class GameController implements GameListener {
-    Display displayer;
-    Board board;
-    boolean showAvailableMode = false;
-    boolean isRightTurn;
-    Position fromPosition;
+    private Display displayer;
+    private Board board;
+    private boolean showAvailableMode = false;
+    private boolean isRightTurn;
+    private Position fromPosition;
 
     @Override
     public void onClick(Position toPosition) {
-        Piece piece = board.getSpecificPiece(toPosition);
-        System.out.println(piece.getType());
+        Piece piece = this.board.getSpecificPiece(toPosition);
+        //System.out.println(piece.getType());
 
-        if(piece.isCoronationTime()){
+       /* if(piece.isCoronationTime()){
             board.promote(piece);
             System.out.println("Done");
-        }
+        }*/
+
+       /*
+       if(toPosition.getY()==3){
+           Piece test = board.getSpecificPiece(fromPosition); //TODO RETRACT
+           System.out.println("WHITE3= " + test.isFromTeamWhite());
+           System.out.println("fromPosition3= " + fromPosition.getX() + " " + fromPosition.getY());
+
+           System.out.println("WHITE4= " + piece.isFromTeamWhite());
+           System.out.println("toPosition4= " + toPosition.getX() + " " + toPosition.getY());
+       }*/
 
         if (showAvailableMode) {
-            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, board.getSpecificPiece(fromPosition));
+            Piece test = this.board.getSpecificPiece(fromPosition); //TODO RETRACT
+            System.out.println("WHITE3= " + test.isFromTeamWhite());
+            System.out.println("TYPE3= " + test.getType());
+            System.out.println("fromPosition3= " + fromPosition.getX() + " " + fromPosition.getY());
+            showAvailableMode = !displayer.movePiece(fromPosition, toPosition, test);
             if(!showAvailableMode)
-                board.setTeamWhiteTurn(!board.isTeamWhiteTurn());
+                this.board.setTeamWhiteTurn(!this.board.isTeamWhiteTurn());
             if (showAvailableMode) {
                 displayer.cleanPossibilities();
                 showAvailableMode = false;
             }
         } else {
+            System.out.println("WHITE3= " + piece.isFromTeamWhite());
+            System.out.println("toPosition3= " + toPosition.getX() + " " + toPosition.getY());
             if (piece.getType() == Type.MAN || piece.getType() == Type.KING) {
-                isRightTurn = piece.isFromTeamWhite() == board.isTeamWhiteTurn();
+                isRightTurn = piece.isFromTeamWhite() == this.board.isTeamWhiteTurn();
                 if(isRightTurn) {
                     fromPosition = toPosition;
                     showAvailableMode = true;
-                    displayer.showPossibilities(piece.getAvailableMovements(board));
+                    displayer.showPossibilities(piece.getAvailableMovements(this.board));
                 }
             }
         }
@@ -56,7 +71,7 @@ public class GameController implements GameListener {
     }
 
     public void startGame(){
-        board = new Board();
-        displayer = new Display(board, GameController.this);
+        this.board = new Board();
+        this.displayer = new Display(this.board, GameController.this);
     }
 }

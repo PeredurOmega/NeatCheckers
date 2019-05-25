@@ -5,6 +5,6 @@ import enums.Type;
 public class Empty extends Piece {
 
     public Empty(int vX, int vY) {
-        super(vX, vY, Type.EMPTY, true);
+        super(vX, vY, Type.EMPTY, false);
     }
 }

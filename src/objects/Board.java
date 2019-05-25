@@ -4,7 +4,7 @@ import enums.Type;
 
 import java.util.Random;
 
-public class Board implements Cloneable{
+public class Board{
 
     private Player playerA;
     private Player playerB;
@@ -20,6 +20,22 @@ public class Board implements Cloneable{
         initGame();
     }
 
+    Board(Board board){
+        this.playerA = board.playerA;
+        this.playerB = board.playerB;
+        this.isTeamWhiteTurn = board.isTeamWhiteTurn;
+        this.game = cloneArray(board.game);
+    }
+
+    private Piece[][] cloneArray(Piece[][] src) {
+        int length = src.length;
+        Piece[][] target = new Piece[length][src[0].length];
+        for (int i = 0; i < length; i++) {
+            System.arraycopy(src[i], 0, target[i], 0, src[i].length);
+        }
+        return target;
+    }
+
     private void initGame(){
         boolean aBegin = new Random().nextBoolean();
         this.playerA = new Player(aBegin);
@@ -27,31 +43,31 @@ public class Board implements Cloneable{
         for(int i = 0; i < row; i++){
             for(int a = (i+1)%2; a < col; a+= 2){
                 if(i<4){
-                    game[i][a] = new Man(i, a, false);
+                    this.game[i][a] = new Man(i, a, false);
                 }
                 else if(i>5){
-                    game[i][a] = new Man(i, a, true);
+                    this.game[i][a] = new Man(i, a, true);
                 }
             }
         }
         for(int i = 0; i < row; i++){
             for(int a = 0; a < col; a++){
-                if(game[i][a] == null){
-                    game[i][a] = new Empty(i, a);
+                if(this.game[i][a] == null){
+                    this.game[i][a] = new Empty(i, a);
                 }
             }
         }
     }
 
     public Piece[][] getGame() {
-        return game;
+        return this.game;
     }
 
     public Piece getSpecificPiece(Position position){
         if(position.getX() < 0 || position.getX() > 9 || position.getY() < 0 || position.getY() > 9 ){
             return new Out();
         }else{
-            return game[position.getX()][position.getY()];
+            return this.game[position.getX()][position.getY()];
         }
     }
 
@@ -84,28 +100,25 @@ public class Board implements Cloneable{
     }
 
     public void promote(Piece piece){
-        game[piece.getX()][piece.getY()] = new King(piece.getX(),piece.getY(),piece.isFromTeamWhite());
+        this.game[piece.getX()][piece.getY()] = new King(piece.getX(),piece.getY(),piece.isFromTeamWhite());
     }
 
     public void move(Position fromPosition, Position toPosition){
-        game[toPosition.getX()][toPosition.getY()] = game[fromPosition.getX()][fromPosition.getY()];
-        game[toPosition.getX()][toPosition.getY()].setX(toPosition.getX());
-        game[toPosition.getX()][toPosition.getY()].setY(toPosition.getY());
-        game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
+        Piece fromPiece = this.game[fromPosition.getX()][fromPosition.getY()];
+        if(fromPiece.getType() == Type.MAN){
+            this.game[toPosition.getX()][toPosition.getY()] = new Man(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
+        }else if(fromPiece.getType() == Type.KING){
+            this.game[toPosition.getX()][toPosition.getY()] = new King(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
+        }
+        this.game[fromPosition.getX()][fromPosition.getY()] = new Empty(fromPosition.getX(), fromPosition.getY());
+        System.out.println("WHITE =" + this.game[toPosition.getX()][toPosition.getY()].isFromTeamWhite());
+        System.out.println("fromPosition =" + fromPosition.getX()+ " " + fromPosition.getY());
+        System.out.println("toPosition =" + toPosition.getX() + " " +toPosition.getY());
     }
     public void eat(Position eatPosition){
-        game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());
+        this.game[eatPosition.getX()][eatPosition.getY()] = new Empty(eatPosition.getX(), eatPosition.getY());
     }
     public void addPiece(Piece piece){
-        game[piece.getX()][piece.getY()] = piece;
-    }
-    public Object clone() {
-        Board newBoard = null;
-        try {
-            newBoard = (Board)super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return newBoard;
+        this.game[piece.getX()][piece.getY()] = piece;
     }
 }

@@ -43,9 +43,7 @@ public class GameContent extends JPanel implements MouseListener {
         pieceGap = (int)((1-pieceRatio)*caseSize/2);
         crownGap = (int)((1-crownRatio)*caseSize/2);
         pieceSize = (int)(pieceRatio*caseSize);
-        System.out.println(pieceSize);
         crownSize = (int)(crownRatio*caseSize);
-        System.out.println(crownSize);
         clickedPos = new Position(-1,-1);
         try{
             whiteCrown = ImageIO.read(new File("res/white-crown.png"));
@@ -169,13 +167,14 @@ public class GameContent extends JPanel implements MouseListener {
 
     public boolean movePiece(Position fromPosition, Position toPosition, Piece piece) {
         if(shownMovements.contains(toPosition)){
+            gameListener.moveOnBoard(fromPosition, toPosition);
             if(Math.abs(fromPosition.getX()-toPosition.getX()) == 2 && Math.abs(fromPosition.getY()-toPosition.getY()) == 2){
                 Position eatingPosition = new Position((int)((fromPosition.getX() + toPosition.getX())/2), (int)((fromPosition.getY() + toPosition.getY())/2));
                 cleanPosition(eatingPosition);
                 gameListener.eatOnBoard(eatingPosition);
             }
             cleanPositions(shownMovements);
-            gameListener.moveOnBoard(fromPosition, toPosition);
+
             drawMove(fromPosition, toPosition, piece);
             shownMovements = new ArrayList<Position>();
             return true;
@@ -185,7 +184,6 @@ public class GameContent extends JPanel implements MouseListener {
     }
 
     private void drawMove(Position fromPosition, Position toPosition, Piece piece) {
-        System.out.println("fromPosition" + fromPosition + " toPosition " + toPosition);
         cleanPosition(fromPosition);
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );

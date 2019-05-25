@@ -1,5 +1,6 @@
 package objects;
 
+import enums.AgentType;
 import enums.Type;
 import interfaces.GameListener;
 
@@ -7,8 +8,8 @@ import java.util.Random;
 
 public class Board{
 
-    private Player playerA;
-    private Player playerB;
+    private Player whitePlayer;
+    private Player blackPlayer;
 
     private boolean isTeamWhiteTurn = true;
 
@@ -21,9 +22,9 @@ public class Board{
         initGame();
     }
 
-    Board(Board board){
-        this.playerA = board.playerA;
-        this.playerB = board.playerB;
+    public Board(Board board){
+        this.whitePlayer = board.whitePlayer;
+        this.blackPlayer = board.blackPlayer;
         this.isTeamWhiteTurn = board.isTeamWhiteTurn;
         this.game = cloneArray(board.game);
     }
@@ -38,9 +39,8 @@ public class Board{
     }
 
     private void initGame(){
-        boolean aBegin = new Random().nextBoolean();
-        this.playerA = new Player(aBegin);
-        this.playerB = new Player(!aBegin);
+        this.whitePlayer = new Player(true, AgentType.HUMAN);
+        this.blackPlayer = new Player(false, AgentType.ALPHABETA);
         for(int i = 0; i < row; i++){
             for(int a = (i+1)%2; a < col; a+= 2){
                 if(i<4){
@@ -84,20 +84,12 @@ public class Board{
         return col;
     }
 
-    public Player getPlayerA() {
-        return playerA;
-    }
-
-    public void setPlayerA(Player playerA) {
-        this.playerA = playerA;
-    }
-
-    public Player getPlayerB() {
-        return playerB;
-    }
-
-    public void setPlayerB(Player playerB) {
-        this.playerB = playerB;
+    public Player getPlayer() {
+        if(this.isTeamWhiteTurn){
+            return whitePlayer;
+        }else{
+            return blackPlayer;
+        }
     }
 
     public void promote(Piece piece){
@@ -106,7 +98,6 @@ public class Board{
 
     public void move(Position fromPosition, Position toPosition){
         Piece fromPiece = this.game[fromPosition.getX()][fromPosition.getY()];
-        System.out.println(fromPiece.getType());
         if(fromPiece.getType() == Type.MAN){
             this.game[toPosition.getX()][toPosition.getY()] = new Man(toPosition.getX(), toPosition.getY(), fromPiece.isFromTeamWhite());
         }else if(fromPiece.getType() == Type.KING){
@@ -137,5 +128,17 @@ public class Board{
             }
         }
         return false;
+    }
+
+    public void rotatePlayer() {
+        this.isTeamWhiteTurn = !this.isTeamWhiteTurn;
+    }
+
+    public boolean isAiTurn() {
+        switch (this.getPlayer().getAgentType()){
+            case HUMAN: return false;
+            case ALPHABETA: return true;
+            default:return false;
+        }
     }
 }

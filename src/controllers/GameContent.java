@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class GameContent extends JPanel implements MouseListener {
 
@@ -165,19 +167,15 @@ public class GameContent extends JPanel implements MouseListener {
         this.shownMovements = positions;
     }
 
-    public boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions) {
-        System.out.println("fromPosition   " + fromPosition);
-        System.out.println("toPosition   " + toPosition);
-        System.out.println("eatenPositions   " + eatenPositions);
-        if(shownMovements.contains(toPosition)){
+    public boolean movePiece(Position fromPosition, Position toPosition, Piece piece, ArrayList<Position> eatenPositions, boolean aiMove) {
+        if(shownMovements.contains(toPosition) || aiMove){
             for(Position eatenPosition: eatenPositions){
                 cleanPosition(eatenPosition);
                 gameListener.eatOnBoard(eatenPosition);
             }
             cleanPositions(shownMovements);
-            gameListener.moveOnBoard(fromPosition, toPosition);
-            piece.setPosition(toPosition);
             drawMove(fromPosition, toPosition, piece);
+            gameListener.moveOnBoard(fromPosition, toPosition);
             shownMovements = new ArrayList<Position>();
             return true;
         }else{
@@ -189,6 +187,7 @@ public class GameContent extends JPanel implements MouseListener {
         cleanPosition(fromPosition);
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+        piece.setPosition(toPosition);
         if(piece.isFromTeamWhite()){
             graphics1.setColor(Color.WHITE);
             graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);

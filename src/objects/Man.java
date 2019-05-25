@@ -28,7 +28,8 @@ public class Man extends Piece {
         }
     }
 
-    private ArrayList<Position> getAllEatingMovements(Board board){
+    @Override
+    public ArrayList<Position> getAllEatingMovements(Board board){
         ArrayList<Position> eatingPositions = new ArrayList<Position>();
         eatingPositions.addAll(getEatingMovementsToBottomLeft(board));
         eatingPositions.addAll(getEatingMovementsToBottomRight(board));

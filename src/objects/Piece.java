@@ -26,6 +26,9 @@ public class Piece extends Position {
     public ArrayList<Position> getAvailableMovements(Board currentBoard){
         return new ArrayList<Position>();
     }
+    public ArrayList<Position> getAllEatingMovements(Board currentBoard){
+        return new ArrayList<Position>();
+    }
 
     @Override
     public Position getPosition() {

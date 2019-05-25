@@ -1,5 +1,7 @@
 package controllers;
 
+import ai.AlphaBetaAgent;
+import enums.AgentType;
 import enums.Type;
 import graphics.Display;
 import graphics.Toast;
@@ -23,7 +25,7 @@ public class GameController implements GameListener {
             Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
             ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board, toPosition);
             if((eatenPositions.size() > 0 && couldEat) || !couldEat){
-                showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions);
+                showAvailableMode = !displayer.movePiece(fromPosition, toPosition, selectedPiece, eatenPositions, board.isAiTurn());
             }else{
                 Thread thread = new Thread(){
                     public void run(){
@@ -33,8 +35,16 @@ public class GameController implements GameListener {
                 thread.start();
             }
             if(!showAvailableMode) {
-                this.board.setTeamWhiteTurn(!this.board.isTeamWhiteTurn());
+                this.board.rotatePlayer();
                 couldEat = this.board.couldEat();
+                if(this.board.getPlayer().getAgentType() == AgentType.ALPHABETA){
+                    AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent();
+                    Position[] positions = alphaBetaAgent.play(this.board);
+                    System.out.println(positions[0] + " " +  positions[1]);
+                    fromPosition = new Position(positions[0]);
+                    showAvailableMode = true;
+                    onClick(positions[1]);
+                }
             }
             if (showAvailableMode) {
                 displayer.cleanPossibilities();

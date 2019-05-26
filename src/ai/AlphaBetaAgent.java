@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public class AlphaBetaAgent {
 
-    /*
-     * Return an integer giving a perspective of the current board for a given team
+    /**
+     * Evaluation method used for miniMax.
+     * @param board Board to evaluate.
+     * @return Integer value representing the score of the current board (for the team to play).
      */
     private int evalState(Board board) {
         int value = 0;
@@ -27,6 +29,11 @@ public class AlphaBetaAgent {
         return value;
     }
 
+    /**
+     * Returns the value of piece according its type.
+     * @param type Type of the piece.
+     * @return Integer value representing the value of the piece.
+     */
     private int getValue(Type type) {
         switch (type){
             case EMPTY: return 0;
@@ -40,7 +47,11 @@ public class AlphaBetaAgent {
     private int cases = 0;
     private int b = 0;
 
-    //Min max tree implementation
+    /**
+     * Returns the best move for the AlphaBetaAgent.
+     * @param currentBoard Actual state of the board.
+     * @return An array of two positions with [0] the fromPosition and [1] the toPosition.
+     */
     public Position[] play(Board currentBoard) {
         long firstTime = System.currentTimeMillis();
         int initialValue = evalState(currentBoard);
@@ -129,6 +140,12 @@ public class AlphaBetaAgent {
             return null;
         }
     }
+
+    /**
+     * Returns the evaluated value with miniMax + alpha-beta layer.
+     * @param currentBoard Actual state of the board.
+     * @return Integer value representing the limit of the tree leaf.
+     */
     private int miniMax(Board currentBoard, int depth, int alpha, int beta, boolean maximize) {
         cases++;
 
@@ -172,8 +189,6 @@ public class AlphaBetaAgent {
 
                     //Simulate movement
                     temporaryBoard.move(piece.getPosition(), targetedMove.getPosition());
-
-
 
                     //Change of Player
                     temporaryBoard.rotatePlayer();

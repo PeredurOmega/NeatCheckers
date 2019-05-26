@@ -29,7 +29,7 @@ public class GameController implements GameListener {
             }else{
                 Thread thread = new Thread(){
                     public void run(){
-                        new Toast("Dans cette position vous devez manger un pion.", 0, 0).showToastText();
+                        new Toast("Dans cette position vous devez manger un pion.").showToastText();
                     }
                 };
                 thread.start();
@@ -73,6 +73,9 @@ public class GameController implements GameListener {
         this.board.eat(eatingPosition);
     }
 
+    /**
+     * Starts a new game.
+     */
     public void startGame(){
         this.board = new Board();
         this.displayer = new Display(this.board, GameController.this);

@@ -4,22 +4,23 @@ import enums.AgentType;
 
 public class Player {
     private final boolean began;
-    private AgentType agentType;
+    private final AgentType agentType;
 
-    public Player(boolean vBegan, AgentType vAgentType){
+    /**
+     * Builds a player.
+     * @param vBegan Boolean representing the player who began (always the whites).
+     * @param vAgentType AgentType representing the type of the player (Human, AI...).
+     */
+    Player(boolean vBegan, AgentType vAgentType){
         this.began = vBegan;
         this.agentType = vAgentType;
     }
 
-    public boolean hasBegun() {
-        return this.began;
-    }
-
+    /**
+     * Returns the player's AgentType.
+     * @return AgentType representing the type of the player (Human, AI...).
+     */
     public AgentType getAgentType() {
         return agentType;
-    }
-
-    public void setAgentType(AgentType agentType) {
-        this.agentType = agentType;
     }
 }

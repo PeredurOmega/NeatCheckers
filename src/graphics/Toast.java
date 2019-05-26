@@ -2,13 +2,16 @@ package graphics;
 
 import java.awt.*;
 import javax.swing.*;
+
 public class Toast extends JFrame {
 
-    String s;
     private final JWindow w;
 
-    public Toast(final String s, int x, int y)
-    {
+    /**
+     * Builds a toast (not auto-displayed).
+     * @param s String text of the toast.
+     */
+    public Toast(final String s) {
         w = new JWindow();
         w.setBackground(new Color(0, 0, 0, 0));
         JPanel p = new JPanel() {
@@ -32,13 +35,13 @@ public class Toast extends JFrame {
             }
         };
         w.add(p);
-        System.out.println("w.getWidth()");
-        System.out.println(Toolkit.getDefaultToolkit().getScreenSize().width);
-        System.out.println(Toolkit.getDefaultToolkit().getScreenSize().height);
         w.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150, (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 50);
         w.setSize(300, 100);
     }
 
+    /**
+     * Shows a toast text in the middle of the screen.
+     */
     public void showToastText() {
         try {
             w.setOpacity(1);

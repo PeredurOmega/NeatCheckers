@@ -6,7 +6,13 @@ import java.util.ArrayList;
 
 public class Man extends Piece {
 
-    public Man(int vX, int vY, boolean vIsFromWhiteTeam) {
+    /**
+     * Builds a man piece.
+     * @param vX X position of this man piece.
+     * @param vY Y position of this man piece.
+     * @param vIsFromWhiteTeam Boolean representing the team of the man piece (true if white, false otherwise).
+     */
+    Man(int vX, int vY, boolean vIsFromWhiteTeam) {
         super(vX, vY, Type.MAN, vIsFromWhiteTeam);
     }
 
@@ -86,6 +92,11 @@ public class Man extends Piece {
         }
     }
 
+    /**
+     * Returns all eating movements on the bottom right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the bottom right axis.
+     */
     private ArrayList<Position> getEatingMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -98,6 +109,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all eating movements on the top right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the top right axis.
+     */
     private ArrayList<Position> getEatingMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -110,6 +126,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all eating movements on the top left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the top left axis.
+     */
     private ArrayList<Position> getEatingMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -122,6 +143,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all eating movements on the bottom left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the bottom left axis.
+     */
     private ArrayList<Position> getEatingMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -134,6 +160,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the bottom right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the bottom right axis.
+     */
     private ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -144,6 +175,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the top right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the top right axis.
+     */
     private ArrayList<Position> getMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -154,6 +190,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the top left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the top left axis.
+     */
     private ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();
@@ -163,6 +204,11 @@ public class Man extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the bottom left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the bottom left axis.
+     */
     private ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         ArrayList<Position> movements = new ArrayList<>();

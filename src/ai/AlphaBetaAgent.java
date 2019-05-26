@@ -30,12 +30,12 @@ public class AlphaBetaAgent {
     private int evalState(Board board) {
         int value = 0;
         for(int x = 0; x < 10; x++) {
-            for(int y = 0; y < 10; y++) {
+            for(int y = (x+1)%2; y < 10; y+= 2) {
                 Piece piece = board.getSpecificPiece(new Position(x, y));
-                if(piece.isFromTeamWhite() == board.isTeamWhiteTurn()) {
-                    value += getValue(piece.getType());
+                if(!piece.isFromTeamWhite()) {
+                    value += getValue(piece);
                 } else {
-                    value -= getValue(piece.getType());
+                    value -= getValue(piece);
                 }
             }
         }
@@ -43,16 +43,25 @@ public class AlphaBetaAgent {
     }
 
     /**
-     * Returns the value of piece according its type.
-     * @param type Type of the piece.
+     * Returns the value of piece according to a variety of parameters.
+     * @param piece Type of the piece.
      * @return Integer value representing the value of the piece.
      */
-    private int getValue(Type type) {
-        switch (type){
-            case EMPTY: return 0;
-            case OUT: return 0;
-            case KING: return 25;
-            case MAN: return 5;
+    private int getValue(Piece piece) {
+        switch (piece.getType()){
+            case KING: return 20;
+            case MAN:
+                if(piece.getY() == 0 || piece.getY() == 9 || piece.getX() == 0 || piece.getX() == 9){
+                    return 10;
+                }else if(piece.getY() == 1 || piece.getY() == 8 || piece.getX() == 1 || piece.getX() == 8){
+                    return 9;
+                }else if(piece.getY() == 2 || piece.getY() == 7 || piece.getX() == 2 || piece.getX() == 7){
+                    return 8;
+                }else if(piece.getY() == 3 || piece.getY() == 6 || piece.getX() == 3 || piece.getX() == 6){
+                    return 7;
+                }else{
+                    return 6;
+                }
             default: return 0;
         }
     }
@@ -73,12 +82,10 @@ public class AlphaBetaAgent {
         ArrayList<Piece> bestPieces = new ArrayList<>();
         int p = 0; //To current index of bestTo and bestPiece
 
-        int depth = 17;
-
         System.out.println("INITIAL SCORE " + initialValue);
 
         for(int x = 0; x < 10; x++) {
-            for(int y = 0; y < 10; y++) {
+            for(int y = (x+1)%2; y < 10; y+= 2) {
                 Piece piece = currentBoard.getSpecificPiece(new Position(x, y));
                 if(piece.getType() == Type.OUT || piece.getType() == Type.EMPTY){
                     continue;
@@ -115,7 +122,7 @@ public class AlphaBetaAgent {
                     temporaryBoard.rotatePlayer();
 
                     //Recursive tree
-                    int value = progressiveDeepeningSearch(temporaryBoard, depth);
+                    int value = progressiveDeepeningSearch(temporaryBoard);
 
                     //Is it the best one ?
                     if(value > bestValue) {
@@ -166,15 +173,15 @@ public class AlphaBetaAgent {
             searchCutoff = true;
         }
 
-        boolean couldEat = currentBoard.couldEat();
         if(depth == 0 || searchCutoff) {
             return evalState(currentBoard);
         }
 
+        boolean couldEat = currentBoard.couldEat();
         int limitValue = maximize ? Integer.MIN_VALUE : Integer.MAX_VALUE;
 
         for(int x = 0; x < 10; x++) {
-            for(int y = 0; y < 10; y++) {
+            for(int y = (x+1)%2; y < 10; y+= 2) {
                 Piece piece = currentBoard.getSpecificPiece(new Position(x, y));
                 if(piece.getType() == Type.OUT || piece.getType() == Type.EMPTY){
                     continue;
@@ -240,27 +247,22 @@ public class AlphaBetaAgent {
      * @param currentBoard Actual state of the board.
      * @return Integer value representing the limit of the tree leaf.
      */
-    private int progressiveDeepeningSearch(Board currentBoard, int depth) {
+    private int progressiveDeepeningSearch(Board currentBoard) {
         long startTime = System.currentTimeMillis();
         long endTime = startTime + TIME_LIMIT_MILLIS;
-        int score = 0;
+        int value = 0;
+        int depth = 0;
         searchCutoff = false;
 
-        while (true) {
-            long currentTime = System.currentTimeMillis();
-            if (currentTime >= endTime) {
-                break;
-            }
-            int searchResult = miniMax(currentBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true, currentTime, endTime - currentTime);
-
+        while (System.currentTimeMillis() < endTime) {
+            int searchResult = miniMax(currentBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, false, System.currentTimeMillis(), endTime - System.currentTimeMillis());
             if (!searchCutoff) {
-                score = searchResult;
+                value = searchResult;
             }
-
             depth++;
         }
 
-        return score;
+        return value;
     }
 
 }

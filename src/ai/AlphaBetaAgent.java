@@ -9,6 +9,19 @@ import java.util.ArrayList;
 
 public class AlphaBetaAgent {
 
+    private boolean searchCutoff = false;
+    private final long TIME_LIMIT_MILLIS;
+    private int cases = 0;
+    private int b = 0;
+
+    /**
+     * Builds a piece.
+     * @param TIME_LIMIT_IN_MILLIS_FOR_EACH_INITIAL_MOVE Maximum time in milliseconds allocated to current agent to cumpute.
+     */
+    public AlphaBetaAgent(long TIME_LIMIT_IN_MILLIS_FOR_EACH_INITIAL_MOVE){
+        this.TIME_LIMIT_MILLIS = TIME_LIMIT_IN_MILLIS_FOR_EACH_INITIAL_MOVE;
+    }
+
     /**
      * Evaluation method used for miniMax.
      * @param board Board to evaluate.
@@ -44,9 +57,6 @@ public class AlphaBetaAgent {
         }
     }
 
-    private int cases = 0;
-    private int b = 0;
-
     /**
      * Returns the best move for the AlphaBetaAgent.
      * @param currentBoard Actual state of the board.
@@ -63,7 +73,7 @@ public class AlphaBetaAgent {
         ArrayList<Piece> bestPieces = new ArrayList<>();
         int p = 0; //To current index of bestTo and bestPiece
 
-        int depth = 7;
+        int depth = 17;
 
         System.out.println("INITIAL SCORE " + initialValue);
 
@@ -105,7 +115,7 @@ public class AlphaBetaAgent {
                     temporaryBoard.rotatePlayer();
 
                     //Recursive tree
-                    int value = miniMax(temporaryBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, false);
+                    int value = progressiveDeepeningSearch(temporaryBoard, depth);
 
                     //Is it the best one ?
                     if(value > bestValue) {
@@ -146,11 +156,18 @@ public class AlphaBetaAgent {
      * @param currentBoard Actual state of the board.
      * @return Integer value representing the limit of the tree leaf.
      */
-    private int miniMax(Board currentBoard, int depth, int alpha, int beta, boolean maximize) {
+    private int miniMax(Board currentBoard, int depth, int alpha, int beta, boolean maximize, long startTime, long timeLimit) {
         cases++;
 
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = (currentTime - startTime);
+
+        if (elapsedTime >= timeLimit) {
+            searchCutoff = true;
+        }
+
         boolean couldEat = currentBoard.couldEat();
-        if(depth == 0) {
+        if(depth == 0 || searchCutoff) {
             return evalState(currentBoard);
         }
 
@@ -194,7 +211,7 @@ public class AlphaBetaAgent {
                     temporaryBoard.rotatePlayer();
 
                     //Recursive tree
-                    int value = miniMax(temporaryBoard, (depth - 1), alpha, beta, !maximize);
+                    int value = miniMax(temporaryBoard, (depth - 1), alpha, beta, !maximize, startTime, timeLimit);
 
                     if(!maximize && value <= limitValue) {
                         limitValue = value;
@@ -216,6 +233,34 @@ public class AlphaBetaAgent {
             }
         }
         return limitValue;
+    }
+
+    /**
+     * Returns the evaluated value with miniMax + alpha-beta layer + insurance policy with progressive deepening.
+     * @param currentBoard Actual state of the board.
+     * @return Integer value representing the limit of the tree leaf.
+     */
+    private int progressiveDeepeningSearch(Board currentBoard, int depth) {
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + TIME_LIMIT_MILLIS;
+        int score = 0;
+        searchCutoff = false;
+
+        while (true) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime >= endTime) {
+                break;
+            }
+            int searchResult = miniMax(currentBoard, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true, currentTime, endTime - currentTime);
+
+            if (!searchCutoff) {
+                score = searchResult;
+            }
+
+            depth++;
+        }
+
+        return score;
     }
 
 }

@@ -38,7 +38,7 @@ public class GameController implements GameListener {
                 this.board.rotatePlayer();
                 couldEat = this.board.couldEat();
                 if(this.board.getPlayer().getAgentType() == AgentType.ALPHABETA){
-                    AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent();
+                    AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(500);
                     Position[] positions = alphaBetaAgent.play(this.board);
                     System.out.println(positions[0] + " " +  positions[1]);
                     fromPosition = new Position(positions[0]);

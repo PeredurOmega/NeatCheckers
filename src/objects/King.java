@@ -6,6 +6,12 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 
+    /**
+     * Builds a king piece.
+     * @param vX X position of this king piece.
+     * @param vY Y position of this king piece.
+     * @param vIsFromWhiteTeam Boolean representing the team of the king piece (true if white, false otherwise).
+     */
     King(int vX, int vY, boolean vIsFromWhiteTeam) {
         super(vX, vY,  Type.KING,vIsFromWhiteTeam);
     }
@@ -121,6 +127,11 @@ public class King extends Piece {
         }
     }
 
+    /**
+     * Returns all non-eating movements on the bottom right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the bottom right axis.
+     */
     private ArrayList<Position> getMovementsToBottomRight(Board currentBoard){
         ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() + 1, y = this.getY() + 1;
@@ -132,6 +143,11 @@ public class King extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the top right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the top right axis.
+     */
     private ArrayList<Position> getMovementsToTopRight(Board currentBoard){
         ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() - 1, y = this.getY() + 1;
@@ -143,6 +159,11 @@ public class King extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the top left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the top left axis.
+     */
     private ArrayList<Position> getMovementsToTopLeft(Board currentBoard){
         ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() - 1, y = this.getY() - 1;
@@ -154,6 +175,11 @@ public class King extends Piece {
         return movements;
     }
 
+    /**
+     * Returns all non-eating movements on the bottom left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all non-eating movements on the bottom left axis.
+     */
     private ArrayList<Position> getMovementsToBottomLeft(Board currentBoard){
         ArrayList<Position> movements = new ArrayList<>();
         int x = this.getX() + 1, y = this.getY() - 1;
@@ -165,7 +191,11 @@ public class King extends Piece {
         return movements;
     }
 
-
+    /**
+     * Returns all eating movements on the bottom right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the bottom right axis.
+     */
     private ArrayList<Position> getEatingMovementsToBottomRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         int xFromEating = 10, yFromEating = 10;
@@ -197,6 +227,11 @@ public class King extends Piece {
     }
 
 
+    /**
+     * Returns all eating movements on the bottom left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the bottom left axis.
+     */
     private ArrayList<Position> getEatingMovementsToBottomLeft(Board currentBoard) {
         int x = this.getX(), y = this.getY();
         int xFromEating = 10, yFromEating = 0;
@@ -227,7 +262,11 @@ public class King extends Piece {
         return movements;
     }
 
-
+    /**
+     * Returns all eating movements on the top left axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the top left axis.
+     */
     private ArrayList<Position> getEatingMovementsToTopLeft(Board currentBoard){
         int x = this.getX(), y = this.getY();
         int xFromEating = 0, yFromEating = 0;
@@ -258,7 +297,11 @@ public class King extends Piece {
         return movements;
     }
 
-
+    /**
+     * Returns all eating movements on the top right axis from the current board.
+     * @param currentBoard Current board to use.
+     * @return ArrayList<Position> with all eating movements on the top right axis.
+     */
     private ArrayList<Position> getEatingMovementsToTopRight(Board currentBoard){
         int x = this.getX(), y = this.getY();
         int xFromEating = 0, yFromEating = 10;

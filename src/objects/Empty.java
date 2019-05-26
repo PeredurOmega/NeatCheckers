@@ -4,7 +4,12 @@ import enums.Type;
 
 class Empty extends Piece {
 
-    public Empty(int vX, int vY) {
+    /**
+     * Builds an empty piece.
+     * @param vX X position of this empty piece.
+     * @param vY Y position of this empty piece.
+     */
+    Empty(int vX, int vY) {
         super(vX, vY, Type.EMPTY, false);
     }
 }

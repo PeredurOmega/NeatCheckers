@@ -33,9 +33,9 @@ public class AlphaBetaAgent {
             for(int y = 0; y < 10; y++) {
                 Piece piece = board.getSpecificPiece(new Position(x, y));
                 if(piece.isFromTeamWhite() == board.isTeamWhiteTurn()) {
-                    value += getValue(piece.getType());
+                    value += getValue(piece);
                 } else {
-                    value -= getValue(piece.getType());
+                    value -= getValue(piece);
                 }
             }
         }
@@ -43,16 +43,27 @@ public class AlphaBetaAgent {
     }
 
     /**
-     * Returns the value of piece according its type.
-     * @param type Type of the piece.
+     * Returns the value of piece according to a variety of parameters.
+     * @param piece Type of the piece.
      * @return Integer value representing the value of the piece.
      */
-    private int getValue(Type type) {
-        switch (type){
+    private int getValue(Piece piece) {
+        switch (piece.getType()){
             case EMPTY: return 0;
             case OUT: return 0;
-            case KING: return 25;
-            case MAN: return 5;
+            case KING: return 10;
+            case MAN:
+                if(piece.getY() == 0 || piece.getY() == 9 || piece.getX() == 0 || piece.getX() == 9){
+                    return 5;
+                }else if(piece.getY() == 1 || piece.getY() == 8 || piece.getX() == 1 || piece.getX() == 8){
+                    return 4;
+                }else if(piece.getY() == 2 || piece.getY() == 7 || piece.getX() == 2 || piece.getX() == 7){
+                    return 3;
+                }else if(piece.getY() == 3 || piece.getY() == 6 || piece.getX() == 3 || piece.getX() == 6){
+                    return 2;
+                }else{
+                    return 1;
+                }
             default: return 0;
         }
     }

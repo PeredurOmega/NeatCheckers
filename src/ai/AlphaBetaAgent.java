@@ -31,8 +31,8 @@ public class AlphaBetaAgent {
         switch (type){
             case EMPTY: return 0;
             case OUT: return 0;
-            case KING: return 5;
-            case MAN: return 1;
+            case KING: return 25;
+            case MAN: return 5;
             default: return 0;
         }
     }
@@ -52,7 +52,7 @@ public class AlphaBetaAgent {
         ArrayList<Piece> bestPieces = new ArrayList<>();
         int p = 0; //To current index of bestTo and bestPiece
 
-        int depth = 10;
+        int depth = 7;
 
         System.out.println("INITIAL SCORE " + initialValue);
 
@@ -77,7 +77,16 @@ public class AlphaBetaAgent {
 
                 //Iterate all possible moves
                 for(Position targetedMove: availableMovements) {
+                    //Deep copy of the board
                     Board temporaryBoard = new Board(currentBoard);
+
+                    //Simulate eating
+                    if(couldEat){
+                        for(Position eatenPosition: piece.getAtePositions(temporaryBoard, targetedMove)){
+                            temporaryBoard.eat(eatenPosition);
+                        }
+                    }
+
                     //Simulate movement
                     temporaryBoard.move(piece.getPosition(), targetedMove.getPosition());
 
@@ -94,11 +103,11 @@ public class AlphaBetaAgent {
                         bestTos.clear();
                         bestPieces.clear();
                         p = 0;
-                        bestTos.add(p, targetedMove);
-                        bestPieces.add(p++, piece);
+                        bestTos.add(targetedMove);
+                        bestPieces.add(piece);
                     } else if (value == bestValue) { //Just another good one ? Add it
-                        bestTos.add(p, targetedMove);
-                        bestPieces.add(p++, piece);
+                        bestTos.add(targetedMove);
+                        bestPieces.add(piece);
                     }
                 }
             }
@@ -107,10 +116,10 @@ public class AlphaBetaAgent {
         int selectedPlay = (int) (Math.random() * p);
         Position bestTo = bestTos.get(selectedPlay);
         Piece bestPiece = bestPieces.get(selectedPlay);
+        System.out.println(bestTo);
 
         if(bestTo != null && bestPiece != null) {
             System.out.println("Best move " + bestPiece.getType() +  " from" + bestPiece.isFromTeamWhite() + " " + bestPiece.getPosition() + " to " + bestTo + " with score : " + bestValue + " and done " + cases + " cases ");
-            //currentBoard.move(bestPiece.getPosition(), bestTo);
             System.out.println("Alpha beta triggered " + b);
             long timeDif = System.currentTimeMillis() - firstTime;
             System.out.println("Time taken = " + timeDif + "ms");
@@ -122,6 +131,7 @@ public class AlphaBetaAgent {
     }
     private int miniMax(Board currentBoard, int depth, int alpha, int beta, boolean maximize) {
         cases++;
+
         boolean couldEat = currentBoard.couldEat();
         if(depth == 0) {
             return evalState(currentBoard);
@@ -150,9 +160,20 @@ public class AlphaBetaAgent {
 
                 //Iterate all possible moves
                 for(Position targetedMove: availableMovements) {
+                    //Deep copy of the board
                     Board temporaryBoard = new Board(currentBoard);
+
+                    //Simulate eating
+                    if(couldEat){
+                        for(Position eatenPosition: piece.getAtePositions(temporaryBoard, targetedMove)){
+                            temporaryBoard.eat(eatenPosition);
+                        }
+                    }
+
                     //Simulate movement
                     temporaryBoard.move(piece.getPosition(), targetedMove.getPosition());
+
+
 
                     //Change of Player
                     temporaryBoard.rotatePlayer();

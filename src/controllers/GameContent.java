@@ -78,8 +78,9 @@ public class GameContent extends JPanel implements MouseListener {
 
         for(int i = 0; i< row;i++) { //b.getRow()
             for (int a = 0; a < col; a++) { //b.getCol()
-                if((a+i)%2 == 1)
+                if((a+i)%2 == 1){
                     g.fillRect(a * caseSize, i * caseSize, caseSize, caseSize);
+                }
             }
         }
 

@@ -6,7 +6,7 @@ import enums.Type;
 public class Board{
 
     private Player whitePlayer;
-    private final Player blackPlayer;
+    private Player blackPlayer;
     private boolean isTeamWhiteTurn = true;
     private final int row = 10, col = 10;
     private Piece[][] game = new Piece[10][10];
@@ -16,7 +16,7 @@ public class Board{
      */
     public Board(){
         this.whitePlayer = new Player(true, AgentType.HUMAN);
-        this.blackPlayer = new Player(false, AgentType.ALPHABETA);
+        this.blackPlayer = new Player(false, AgentType.HUMAN);
         for(int i = 0; i < row; i++){
             for(int a = (i+1)%2; a < col; a+= 2){
                 if(i<4){
@@ -86,6 +86,10 @@ public class Board{
      * Returns true if the whites have to play.
      * @return Boolean representing the turn .
      */
+
+    public void changeBlackPlayer(AgentType agentType){
+        blackPlayer = new Player(false, agentType);
+    }
     public boolean isTeamWhiteTurn() { return isTeamWhiteTurn; }
 
     /**

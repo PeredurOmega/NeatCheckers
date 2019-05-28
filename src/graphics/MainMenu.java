@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainMenu extends JPanel implements MouseListener {
 
@@ -30,48 +33,61 @@ public class MainMenu extends JPanel implements MouseListener {
         board = b;
 
 
-        mainFont = new Font("Calibri",Font.PLAIN,20);
+        try {
+            mainFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/memphis5.ttf"));
+            mainFont = mainFont.deriveFont(25F);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mainFont = new Font("Arial",Font.PLAIN,20);
+        }
+
         largeFont = mainFont.deriveFont(50F);
 
 
-        playAiString = "Play against Astrid";
+        playAiString = "Jouer avec Astrid";
         playAgainstAI = new Rectangle((600 / 2)-75,(600 / 2)-25,150,50);
 
-        playerButtonString = "Play against a friend";
+        playerButtonString = "Jouer avec un ami";
         playAgainstPlayer = new Rectangle((600 / 2)-75,(600 / 2)-25,150,50);
 
     }
 
     public void paint(Graphics g){
-
         super.paint(g);
-
         ((Graphics2D) g).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-
-        setBackground(new Color(16574601));
-
+        setBackground(Color.white);
+        g.setColor(new Color(58,15,7));
+        for(int i = 0; i< 10;i++) { //b.getRow()
+            for (int a = 0; a < 10; a++) { //b.getCol()
+                if((a+i)%2 == 1 && (i == 0 || i == 9 || a == 0 || a == 9 || i == 1 || i == 8 || a == 1 || a == 8)){
+                    g.fillRect(a * 60, i * 60, 60, 60);
+                }
+            }
+        }
         g.setFont(largeFont);
-
-        g.drawString("Checkers", (600-g.getFontMetrics().stringWidth("Checkers"))/2,(int)(3d/12*600));
-
+        g.setColor(new Color(255,90,6));
+        g.drawString("CHECKERS", (600-g.getFontMetrics().stringWidth("CHECKERS"))/2,(int)(40+3d/12*600));
+        g.setFont(mainFont);
+        g.setColor(new Color(255,90,6));
+        g.drawString("by TimePlanner", (600-g.getFontMetrics().stringWidth("by TimePlanner"))/2,(int)(70+3d/12*600));
         drawButtons(g);
-
     }
 
     private void drawButtons(Graphics g){
-
         g.setFont(mainFont);
 
         int wid = g.getFontMetrics().stringWidth(playAiString);
         int hei = g.getFontMetrics().getHeight();
 
-        playAgainstAI = new Rectangle((600-wid-20)/2,(int)(5d/12*600),wid+40,hei+10);
+        playAgainstAI = new Rectangle((600-wid-20)/2,(int)(40+5d/12*600),wid+40,hei+10);
 
         wid = g.getFontMetrics().stringWidth(playerButtonString);
 
-        playAgainstPlayer = new Rectangle((600-wid-20)/2,(int)(7d/12*600), wid+40,hei+10);
+        playAgainstPlayer = new Rectangle((600-wid-20)/2,(int)(20+7d/12*600), wid+40,hei+10);
 
-        g.setColor(new Color(10504971));
+        g.setColor(new Color(255,90,6));
         Stroke oldStroke = ((Graphics2D) g).getStroke();
         ((Graphics2D) g).setStroke(new BasicStroke(2));
         g.drawRect((int)playAgainstAI.getX(),(int)playAgainstAI.getY(),(int)playAgainstAI.getWidth(),(int)playAgainstAI.getHeight());

@@ -69,9 +69,9 @@ public class GameContent extends JPanel implements MouseListener {
      */
     private void drawGame(Graphics g){
         // Board
-        setBackground(new Color(16574601));
+        setBackground(new Color(255,90,6));
         ((Graphics2D) g).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        g.setColor(new Color(10504971));
+        g.setColor(new Color(58,15,7));
 
         int row = b.getRow();
         int col = b.getCol();
@@ -154,7 +154,7 @@ public class GameContent extends JPanel implements MouseListener {
         graphics1.setColor(Color.GREEN);
         for(Position position: positions){
             graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
-            graphics1.setColor(new Color(10504971));
+            graphics1.setColor(new Color(58,15,7));
             graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
         }
     }
@@ -168,7 +168,7 @@ public class GameContent extends JPanel implements MouseListener {
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         graphics1.setColor(Color.GREEN);
         graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
-        graphics1.setColor(new Color(10504971));
+        graphics1.setColor(new Color(58,15,7));
         graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
     }
 

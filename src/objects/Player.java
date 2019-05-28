@@ -23,4 +23,6 @@ public class Player {
     public AgentType getAgentType() {
         return agentType;
     }
+
+    public boolean controlWhiteTeam(){ return began; }
 }

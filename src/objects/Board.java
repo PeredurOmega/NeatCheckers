@@ -1,5 +1,6 @@
 package objects;
 
+import ai.AlphaBetaAgent;
 import enums.AgentType;
 import enums.Type;
 
@@ -10,6 +11,7 @@ public class Board{
     private boolean isTeamWhiteTurn = true;
     private final int row = 10, col = 10;
     private Piece[][] game = new Piece[10][10];
+    private Player winner;
 
     /**
      * Game initializer.
@@ -61,10 +63,53 @@ public class Board{
         return target;
     }
 
+    public boolean isFinish(){
+        boolean canWhitePawnMove = false;
+        boolean canBlackPawnMove = false;
+        boolean atLeastOneWhite = false;
+        boolean atLeastOneBlack = false;
+        for(Piece[] pieceRow: game){
+            for(Piece piece: pieceRow){
+                if(piece.getAvailableMovements(this).size() != 0 || piece.getAllEatingMovements(this).size() != 0){
+                    if(piece.isFromTeamWhite()) {
+                        canWhitePawnMove = true;
+                        atLeastOneWhite = true;
+                    }
+                    else {
+                        canBlackPawnMove = true;
+                        atLeastOneBlack = true;
+                    }
+                }
+                if(canWhitePawnMove && canBlackPawnMove)
+                    return false;
+            }
+        }
+        if (!atLeastOneBlack) {
+            winner = whitePlayer;
+            return true;
+        }
+        else if(!atLeastOneWhite){
+            winner = blackPlayer;
+            return true;
+        }
+        if(canWhitePawnMove)
+            winner = whitePlayer;
+        else
+            winner = blackPlayer;
+        return true;
+    }
+
+    public Player getWinner(){
+        return winner;
+    }
     /**
      * Returns the current game.
      * @return An array of Piece[][] representing the game.
      */
+
+    public boolean hasAnAiPlayer(){
+        return blackPlayer.getAgentType()== AgentType.ALPHABETA;
+    }
     public Piece[][] getGame() {
         return this.game;
     }

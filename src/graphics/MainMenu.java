@@ -129,14 +129,14 @@ public class MainMenu extends JPanel implements MouseListener {
         clickedPos = new Position(e.getX(),e.getY());
         if(playAgainstAI.contains(clickedPos.getX(),clickedPos.getY())) {
             board.changeBlackPlayer(AgentType.ALPHABETA);
-            cardLayout.show(cardPanel, "" + 2);
+            cardLayout.show(cardPanel, "gameContent");
 
         }else if (playAgainstPlayer.contains(clickedPos.getX(),clickedPos.getY())){
-            cardLayout.show(cardPanel,"" + 2);
+            cardLayout.show(cardPanel,"gameContent");
         }else if (watchAgainstAI.contains(clickedPos.getX(),clickedPos.getY())){
             board.changeWhitePlayer(AgentType.ALPHABETA);
             board.changeBlackPlayer(AgentType.ALPHABETA);
-            cardLayout.show(cardPanel,"" + 2);
+            cardLayout.show(cardPanel,"gameContent");
             new Thread(){
                 public void run(){
                     gameListener.playWithAstrid();

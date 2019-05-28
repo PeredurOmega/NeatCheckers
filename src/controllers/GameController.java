@@ -21,6 +21,18 @@ public class GameController implements GameListener {
 
     @Override
     public void onClick(Position toPosition) {
+
+        if(board.isFinish()){
+            if(board.hasAnAiPlayer()) {
+                displayer.endScreenAI.setWinnerAgentType(board.getWinner().getAgentType());
+                displayer.getCardLayout().show(displayer.getCardPanel(), "endScreenAI");
+            }
+            else{
+                displayer.endScreenPlayer.setWinnerTeam(board.getWinner().controlWhiteTeam());
+                displayer.getCardLayout().show(displayer.getCardPanel(), "endScreenPlayer");
+            }
+        }
+
         if (showAvailableMode) {
             Piece selectedPiece = this.board.getSpecificPiece(fromPosition);
             ArrayList<Position> eatenPositions = selectedPiece.getAtePositions(this.board, toPosition);
@@ -72,7 +84,7 @@ public class GameController implements GameListener {
      * Starts a new game.
      */
     public void startGame(){
-        this.board = new Board();
+        this.board = new Board('c');
         this.displayer = new Display(this.board, GameController.this);
     }
 

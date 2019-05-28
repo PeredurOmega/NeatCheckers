@@ -1,6 +1,7 @@
 package graphics;
 
 import controllers.GameContent;
+import enums.AgentType;
 import interfaces.GameListener;
 import objects.Board;
 import objects.Piece;
@@ -14,6 +15,9 @@ public class Display extends JFrame {
 
     private final GameContent gameContent;
     private final MainMenu mainMenu;
+    //private final Settings settings;
+    public EndScreenPlayer endScreenPlayer;
+    public EndScreenAI endScreenAI;
     //private final Settings settings;
     //private final Background background;
     private CardLayout cl;
@@ -34,11 +38,28 @@ public class Display extends JFrame {
         mainMenu = new MainMenu(cl, cardPanel, b, gm);
         mainMenu.addMouseListener(mainMenu);
 
+        endScreenPlayer = new EndScreenPlayer(this);
+        endScreenPlayer.addMouseListener(endScreenPlayer);
+
+        endScreenAI = new EndScreenAI(this);
+        endScreenAI.addMouseListener(endScreenAI);
+
+        //settings = new Settings();
+        //settings.addMouseListener(settings);
+
+        /*
+        background = new Background();
+        background.addMouseListener(background);
+        */
+
+
         gameContent = new GameContent(b, gm);
         gameContent.addMouseListener(gameContent);
 
-        cardPanel.add(mainMenu, "1");
-        cardPanel.add(gameContent, "2");
+        cardPanel.add(mainMenu, "mainMenu");
+        cardPanel.add(gameContent, "gameContent");
+        cardPanel.add(endScreenPlayer, "endScreenPlayer");
+        cardPanel.add(endScreenAI, "endScreenAI");
         add(cardPanel);
 
         setUndecorated(false);
@@ -62,6 +83,14 @@ public class Display extends JFrame {
      */
     public void cleanPossibilities() {
         gameContent.cleanPossibilities();
+    }
+
+    public JPanel getCardPanel(){
+        return cardPanel;
+    }
+
+    public CardLayout getCardLayout(){
+        return cl;
     }
 
     /**

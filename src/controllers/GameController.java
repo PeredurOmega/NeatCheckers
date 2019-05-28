@@ -76,6 +76,7 @@ public class GameController implements GameListener {
         this.displayer = new Display(this.board, GameController.this);
     }
 
+    @Override
     public void playWithAstrid(){
         AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(250);
         Position[] positions = alphaBetaAgent.play(this.board);

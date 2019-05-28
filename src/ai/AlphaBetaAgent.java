@@ -32,7 +32,7 @@ public class AlphaBetaAgent {
         for(int x = 0; x < 10; x++) {
             for(int y = (x+1)%2; y < 10; y+= 2) {
                 Piece piece = board.getSpecificPiece(new Position(x, y));
-                if(!piece.isFromTeamWhite()) {
+                if(piece.isFromTeamWhite() == board.isTeamWhiteTurn()) {
                     value += getValue(piece);
                 } else {
                     value -= getValue(piece);

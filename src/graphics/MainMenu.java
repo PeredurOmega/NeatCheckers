@@ -1,6 +1,7 @@
 package graphics;
 
 import enums.AgentType;
+import interfaces.GameListener;
 import objects.Board;
 import objects.Position;
 
@@ -20,18 +21,20 @@ public class MainMenu extends JPanel implements MouseListener {
     private JPanel cardPanel;
     private Rectangle playAgainstAI;
     private String playAiString;
+    private Rectangle watchAgainstAI;
+    private String watchAiString;
     private Rectangle playAgainstPlayer;
     private String playerButtonString;
     private Board board;
+    private GameListener gameListener;
     private Font mainFont;
     private Font largeFont;
 
-    MainMenu(CardLayout cl, JPanel cardP, Board b){
-
-        cardLayout = cl;
-        cardPanel = cardP;
-        board = b;
-
+    MainMenu(CardLayout cl, JPanel cardP, Board b, GameListener gl){
+        this.cardLayout = cl;
+        this.cardPanel = cardP;
+        this.board = b;
+        this.gameListener = gl;
 
         try {
             mainFont = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/memphis5.ttf"));
@@ -45,13 +48,14 @@ public class MainMenu extends JPanel implements MouseListener {
 
         largeFont = mainFont.deriveFont(50F);
 
-
         playAiString = "Jouer avec Astrid";
-        playAgainstAI = new Rectangle((600 / 2)-75,(600 / 2)-25,150,50);
+        playAgainstAI = new Rectangle((600 / 2)-75,(600 / 2),150,50);
 
         playerButtonString = "Jouer avec un ami";
-        playAgainstPlayer = new Rectangle((600 / 2)-75,(600 / 2)-25,150,50);
+        playAgainstPlayer = new Rectangle((600 / 2)-75,(600 / 2),150,50);
 
+        watchAiString = "Regarder Astrid";
+        watchAgainstAI = new Rectangle((600 / 2)-75,(600 / 2),150,50);
     }
 
     public void paint(Graphics g){
@@ -81,11 +85,15 @@ public class MainMenu extends JPanel implements MouseListener {
         int wid = g.getFontMetrics().stringWidth(playAiString);
         int hei = g.getFontMetrics().getHeight();
 
-        playAgainstAI = new Rectangle((600-wid-20)/2,(int)(40+5d/12*600),wid+40,hei+10);
+        playAgainstAI = new Rectangle((600-wid-20)/2,(int)(5d/12*600),wid+40,hei+10);
 
         wid = g.getFontMetrics().stringWidth(playerButtonString);
 
-        playAgainstPlayer = new Rectangle((600-wid-20)/2,(int)(20+7d/12*600), wid+40,hei+10);
+        playAgainstPlayer = new Rectangle((600-wid-20)/2,(int)(20+6d/12*600), wid+40,hei+10);
+
+        wid = g.getFontMetrics().stringWidth(watchAiString);
+
+        watchAgainstAI = new Rectangle((600-wid-20)/2,(int)(40+7d/12*600), wid+40,hei+10);
 
         g.setColor(new Color(255,90,6));
         Stroke oldStroke = ((Graphics2D) g).getStroke();
@@ -103,6 +111,12 @@ public class MainMenu extends JPanel implements MouseListener {
         ((Graphics2D) g).setStroke(oldStroke2);
         g.drawString(playerButtonString,(int)playAgainstPlayer.getX()+20,(int)playAgainstPlayer.getY()+hei);
 
+
+        Stroke oldStroke3 = ((Graphics2D) g).getStroke();
+        ((Graphics2D) g).setStroke(new BasicStroke(2));
+        g.drawRect((int)watchAgainstAI.getX(),(int)watchAgainstAI.getY(),(int)watchAgainstAI.getWidth(),(int)watchAgainstAI.getHeight());
+        ((Graphics2D) g).setStroke(oldStroke3);
+        g.drawString(watchAiString,(int)watchAgainstAI.getX()+20,(int)watchAgainstAI.getY()+hei);
     }
 
     @Override
@@ -114,14 +128,20 @@ public class MainMenu extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         clickedPos = new Position(e.getX(),e.getY());
         if(playAgainstAI.contains(clickedPos.getX(),clickedPos.getY())) {
-            System.out.println("AI");
             board.changeBlackPlayer(AgentType.ALPHABETA);
             cardLayout.show(cardPanel, "" + 2);
 
-        }
-        else if (playAgainstPlayer.contains(clickedPos.getX(),clickedPos.getY())){
-            System.out.println("Human");
+        }else if (playAgainstPlayer.contains(clickedPos.getX(),clickedPos.getY())){
             cardLayout.show(cardPanel,"" + 2);
+        }else if (watchAgainstAI.contains(clickedPos.getX(),clickedPos.getY())){
+            board.changeWhitePlayer(AgentType.ALPHABETA);
+            board.changeBlackPlayer(AgentType.ALPHABETA);
+            cardLayout.show(cardPanel,"" + 2);
+            new Thread(){
+                public void run(){
+                    gameListener.playWithAstrid();
+                }
+            }.start();
         }
     }
 

@@ -21,4 +21,9 @@ public interface GameListener {
      * @param eatingPosition Position to eat on board.
      */
     void eatOnBoard(Position eatingPosition);
+
+    /**
+     * Ask Astrid to play.
+     */
+    void playWithAstrid();
 }

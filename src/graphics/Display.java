@@ -31,27 +31,15 @@ public class Display extends JFrame {
         cardPanel = new JPanel();
         cardPanel.setLayout(cl);
 
-        mainMenu = new MainMenu(cl, cardPanel, b);
+        mainMenu = new MainMenu(cl, cardPanel, b, gm);
         mainMenu.addMouseListener(mainMenu);
-
-        //settings = new Settings();
-        //settings.addMouseListener(settings);
-
-        /*
-        background = new Background();
-        background.addMouseListener(background);
-        */
-
 
         gameContent = new GameContent(b, gm);
         gameContent.addMouseListener(gameContent);
-        //add(gameContent);
 
         cardPanel.add(mainMenu, "1");
         cardPanel.add(gameContent, "2");
-        //cardPanel.add(settings, "3");
         add(cardPanel);
-
 
         setUndecorated(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -59,12 +47,6 @@ public class Display extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public void changePanelDisplayed(int panelNumber){
-
-        cl.show(cardPanel, ""+panelNumber);
-
     }
 
     /**

@@ -83,13 +83,23 @@ public class Board{
     }
 
     /**
-     * Returns true if the whites have to play.
-     * @return Boolean representing the turn .
+     * Change the AgentType of the black player.
      */
-
     public void changeBlackPlayer(AgentType agentType){
         blackPlayer = new Player(false, agentType);
     }
+
+    /**
+     * Change the AgentType of the white player.
+     */
+    public void changeWhitePlayer(AgentType agentType){
+        whitePlayer = new Player(false, agentType);
+    }
+
+    /**
+     * Returns true if the whites have to play.
+     * @return Boolean representing the turn .
+     */
     public boolean isTeamWhiteTurn() { return isTeamWhiteTurn; }
 
     /**

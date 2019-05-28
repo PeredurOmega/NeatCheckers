@@ -1,5 +1,6 @@
 package controllers;
 
+import enums.AgentType;
 import enums.Type;
 import interfaces.GameListener;
 import objects.Board;

@@ -48,7 +48,7 @@ public class MainMenu extends JPanel implements MouseListener {
 
         ((Graphics2D) g).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
 
-        setBackground(new Color(0x94F75F));
+        setBackground(new Color(16574601));
 
         g.setFont(largeFont);
 
@@ -65,25 +65,27 @@ public class MainMenu extends JPanel implements MouseListener {
         int wid = g.getFontMetrics().stringWidth(playAiString);
         int hei = g.getFontMetrics().getHeight();
 
-        playAgainstAI = new Rectangle((600-wid)/2,(int)(5d/12*600),wid+10,hei+10);
+        playAgainstAI = new Rectangle((600-wid-20)/2,(int)(5d/12*600),wid+40,hei+10);
 
         wid = g.getFontMetrics().stringWidth(playerButtonString);
 
-        playAgainstPlayer = new Rectangle((600-wid)/2,(int)(7d/12*600), wid+10,hei+10);
+        playAgainstPlayer = new Rectangle((600-wid-20)/2,(int)(7d/12*600), wid+40,hei+10);
 
-        g.setColor(new Color(0x6B61FA));
-        g.fillRect((int)playAgainstAI.getX(),(int)playAgainstAI.getY(),(int)playAgainstAI.getWidth(),(int)playAgainstAI.getHeight());
+        g.setColor(new Color(10504971));
+        Stroke oldStroke = ((Graphics2D) g).getStroke();
+        ((Graphics2D) g).setStroke(new BasicStroke(2));
+        g.drawRect((int)playAgainstAI.getX(),(int)playAgainstAI.getY(),(int)playAgainstAI.getWidth(),(int)playAgainstAI.getHeight());
+        ((Graphics2D) g).setStroke(oldStroke);
 
-        g.setColor(Color.black);
-        g.drawString(playAiString,(int)playAgainstAI.getX()+5,(int)playAgainstAI.getY()+hei);
+        g.drawString(playAiString,(int)playAgainstAI.getX()+20,(int)playAgainstAI.getY()+hei);
 
 
 
-        g.setColor(new Color(0x6B61FA));
-        g.fillRect((int)playAgainstPlayer.getX(),(int)playAgainstPlayer.getY(),(int)playAgainstPlayer.getWidth(),(int)playAgainstPlayer.getHeight());
-
-        g.setColor(Color.black);
-        g.drawString(playerButtonString,(int)playAgainstPlayer.getX()+5,(int)playAgainstPlayer.getY()+hei);
+        Stroke oldStroke2 = ((Graphics2D) g).getStroke();
+        ((Graphics2D) g).setStroke(new BasicStroke(2));
+        g.drawRect((int)playAgainstPlayer.getX(),(int)playAgainstPlayer.getY(),(int)playAgainstPlayer.getWidth(),(int)playAgainstPlayer.getHeight());
+        ((Graphics2D) g).setStroke(oldStroke2);
+        g.drawString(playerButtonString,(int)playAgainstPlayer.getX()+20,(int)playAgainstPlayer.getY()+hei);
 
     }
 

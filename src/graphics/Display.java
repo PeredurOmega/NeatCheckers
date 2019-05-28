@@ -14,7 +14,7 @@ public class Display extends JFrame {
 
     private final GameContent gameContent;
     private final MainMenu mainMenu;
-    private final Settings settings;
+    //private final Settings settings;
     //private final Background background;
     private CardLayout cl;
     private JPanel cardPanel;
@@ -34,8 +34,8 @@ public class Display extends JFrame {
         mainMenu = new MainMenu(cl, cardPanel, b);
         mainMenu.addMouseListener(mainMenu);
 
-        settings = new Settings();
-        settings.addMouseListener(settings);
+        //settings = new Settings();
+        //settings.addMouseListener(settings);
 
         /*
         background = new Background();
@@ -49,7 +49,7 @@ public class Display extends JFrame {
 
         cardPanel.add(mainMenu, "1");
         cardPanel.add(gameContent, "2");
-        cardPanel.add(settings, "3");
+        //cardPanel.add(settings, "3");
         add(cardPanel);
 
 

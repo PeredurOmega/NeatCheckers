@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class AlphaBetaAgent {
 
     private boolean searchCutoff = false;
+    private boolean isWhite = false;
     private final long TIME_LIMIT_MILLIS;
     private int cases = 0;
     private int b = 0;
@@ -32,7 +33,7 @@ public class AlphaBetaAgent {
         for(int x = 0; x < 10; x++) {
             for(int y = (x+1)%2; y < 10; y+= 2) {
                 Piece piece = board.getSpecificPiece(new Position(x, y));
-                if(piece.isFromTeamWhite() == board.isTeamWhiteTurn()) {
+                if(piece.isFromTeamWhite() == isWhite) {
                     value += getValue(piece);
                 } else {
                     value -= getValue(piece);
@@ -72,6 +73,7 @@ public class AlphaBetaAgent {
      * @return An array of two positions with [0] the fromPosition and [1] the toPosition.
      */
     public Position[] play(Board currentBoard) {
+        isWhite = currentBoard.isTeamWhiteTurn();
         long firstTime = System.currentTimeMillis();
         int initialValue = evalState(currentBoard);
         int bestValue = Integer.MIN_VALUE;

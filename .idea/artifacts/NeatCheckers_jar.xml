@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NeatCheckers:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NeatCheckers_jar</output-path>
+    <root id="archive" name="NeatCheckers.jar">
+      <element id="module-output" name="NeatCheckers" />
+    </root>
+  </artifact>
+</component>

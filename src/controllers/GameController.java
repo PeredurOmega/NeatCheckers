@@ -90,7 +90,7 @@ public class GameController implements GameListener {
 
     @Override
     public void playWithAstrid(){
-        AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(1);
+        AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(250);
         Position[] positions = alphaBetaAgent.play(this.board);
         System.out.println(positions[0] + " " +  positions[1]);
         fromPosition = new Position(positions[0]);

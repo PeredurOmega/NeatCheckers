@@ -49,7 +49,7 @@ public class GameController implements GameListener {
             if(!showAvailableMode) {
                 this.board.rotatePlayer();
                 couldEat = this.board.couldEat();
-                if(this.board.getPlayer().getAgentType() == AgentType.ALPHABETA){
+                if(this.board.getPlayer().getAgentType() == AgentType.ALPHABETA && !this.board.isFinish()){
                     playWithAstrid();
                 }
             }
@@ -84,13 +84,13 @@ public class GameController implements GameListener {
      * Starts a new game.
      */
     public void startGame(){
-        this.board = new Board('c');
+        this.board = new Board();
         this.displayer = new Display(this.board, GameController.this);
     }
 
     @Override
     public void playWithAstrid(){
-        AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(25);
+        AlphaBetaAgent alphaBetaAgent = new AlphaBetaAgent(1);
         Position[] positions = alphaBetaAgent.play(this.board);
         System.out.println(positions[0] + " " +  positions[1]);
         fromPosition = new Position(positions[0]);

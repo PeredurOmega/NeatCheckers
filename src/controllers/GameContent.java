@@ -69,9 +69,9 @@ public class GameContent extends JPanel implements MouseListener {
      */
     private void drawGame(Graphics g){
         // Board
-        setBackground(new Color(255,90,6));
+        setBackground(new Color(255,255,255));
         ((Graphics2D) g).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        g.setColor(new Color(58,15,7));
+        g.setColor(new Color(204,72,5));
 
         int row = b.getRow();
         int col = b.getCol();
@@ -89,7 +89,7 @@ public class GameContent extends JPanel implements MouseListener {
             for(int a = 0; a < col; a++){
                 if(b.getGame()[i][a].getType() == Type.MAN){
                     if(b.getSpecificPiece(new Position(i, a)).isFromTeamWhite()){
-                        g.setColor(Color.WHITE);
+                        g.setColor(Color.white);
                         g.fillOval(pieceGap +a*caseSize, pieceGap +i*caseSize,pieceSize,pieceSize);
                     }else{
                         g.setColor(Color.BLACK);
@@ -151,10 +151,10 @@ public class GameContent extends JPanel implements MouseListener {
     private void cleanPositions(ArrayList<Position> positions) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        graphics1.setColor(Color.GREEN);
+        graphics1.setColor(new Color(50,163,82));
         for(Position position: positions){
             graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
-            graphics1.setColor(new Color(58,15,7));
+            graphics1.setColor(new Color(204,72,5));
             graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
         }
     }
@@ -166,9 +166,9 @@ public class GameContent extends JPanel implements MouseListener {
     private void cleanPosition(Position position) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        graphics1.setColor(Color.GREEN);
+        graphics1.setColor(new Color(50,163,82));
         graphics1.clearRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
-        graphics1.setColor(new Color(58,15,7));
+        graphics1.setColor(new Color(204,72,5));
         graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
     }
 
@@ -179,7 +179,7 @@ public class GameContent extends JPanel implements MouseListener {
     public void drawAvailablePositions(ArrayList<Position> positions) {
         Graphics graphics1 = getGraphics();
         ((Graphics2D) graphics1).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
-        graphics1.setColor(Color.GREEN);
+        graphics1.setColor(new Color(50,163,82));
         cleanPositions(shownMovements);
         for(Position position: positions){
             graphics1.fillRect(position.getY()*caseSize, position.getX()*caseSize,caseSize,caseSize);
@@ -230,7 +230,7 @@ public class GameContent extends JPanel implements MouseListener {
                 graphics1.drawImage(blackCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
             }
         }else{
-            graphics1.setColor(Color.BLACK);
+            graphics1.setColor(Color.black);
             graphics1.fillOval(pieceGap+toPosition.getY()*caseSize,pieceGap+toPosition.getX()*caseSize,pieceSize,pieceSize);
             if(piece.getType() == Type.KING || piece.isCoronationTime()){
                 graphics1.drawImage(whiteCrown, crownGap+toPosition.getY()*caseSize,crownGap+toPosition.getX()*caseSize,crownSize,crownSize,null);
